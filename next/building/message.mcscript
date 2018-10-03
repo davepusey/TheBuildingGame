@@ -1,0 +1,15 @@
+#file: ./message
+/scoreboard players operation #var tbg = @s id
+/scoreboard players add #var tbg 1
+if('score #var tbg > #count id'){
+	/scoreboard players set #var tbg 1
+}
+
+/tag @s add tag
+as(@e[type=bat,tag=!old,tag=new]),
+if('score #var tbg = @s id'){
+	/scoreboard players operation #var2 tbg = #stage tbg
+	/scoreboard players add #var2 tbg 1
+	/tellraw @a[tag=tag] ["",{"translate":"Build the phrase","bold":true},{"translate":" (stage ","color":"gray"},{"score":{"objective":"tbg","name":"#var2"},"color":"gray"},{"translate":" of ","color":"gray"},{"score":{"objective":"id","name":"#count"},"color":"gray"},{"translate":")","color":"gray"},"\n",{"translate":"Build \u00ab"},{"selector":"@s","color":"gold"},{"translate":"\u00bb and press the button on the diamond block."}]
+}
+/tag @s remove tag

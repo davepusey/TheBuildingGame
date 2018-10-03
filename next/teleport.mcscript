@@ -1,0 +1,53 @@
+#file: ./teleport
+/teleport @s 1024 64 0 0 0
+
+if('score #stage tbg <= #count id'){
+	/scoreboard players operation #var tbg = @s id
+	/scoreboard players operation #var tbg += #stage tbg
+	if('score #var tbg > #count id'){
+		/scoreboard players operation #var tbg -= #count id
+	}
+} else {
+	/scoreboard players operation #var tbg = #x tbg
+}
+at(@s){
+	/function tbg:next/teleport.x
+}
+
+
+if('score #stage tbg <= #count id'){
+	/scoreboard players operation #var tbg = #stage tbg
+	/scoreboard players add #var tbg 1
+	/scoreboard players operation #var tbg /= #2 tbg
+} else {
+	/scoreboard players operation #var tbg = #z tbg
+}
+
+at(@s){
+	if('score #var tbg matches 0'){
+		/teleport @s ~15.5 ~11 ~14
+	}
+	if('score #var tbg matches 1..'){
+		/teleport @s ~15.5 ~4 ~4
+	}
+	/function tbg:next/teleport.z
+}
+
+
+#file: ./teleport.x
+if('score #var tbg matches 1..') {
+	/teleport @s ~32 ~ ~
+	/scoreboard players remove #var tbg 1
+	at(@s){
+		/function tbg:next/teleport.x
+	}
+}
+
+#file: ./teleport.z
+if('score #var tbg matches 1..') {
+	/teleport @s ~ ~ ~32
+	/scoreboard players remove #var tbg 1
+	at(@s){
+		/function tbg:next/teleport.z
+	}
+}

@@ -1,0 +1,55 @@
+#file: ./floor
+if('block ~ ~ ~ water'){
+	/setblock ~ ~ ~ water
+}
+if('block ~ ~ ~ lava'){
+	/setblock ~ ~ ~ lava
+}
+if('block ~ ~ ~ redstone_wire'){
+	/setblock ~ ~ ~ redstone_wire
+}
+if('block ~ ~ ~ brewing_stand'){
+	/data merge block ~ ~ ~ {Items:[]}
+}
+
+if(!'block ~ ~ ~ #tbg:powered[powered=true]' && !'block ~ ~ ~ #tbg:pistons[extended=true]' && !'block ~ ~ ~ #tbg:black_list' && !'block ~ ~ ~ jukebox[has_record=true]' && !'block ~ ~ ~ redstone_lamp[lit=true]' && !'block ~ ~ ~ #tbg:buttons_and_lever[face=ceiling]' && !'block ~ ~ ~ #tbg:buttons_and_lever[face=wall]'){
+	if(!'blocks ~ ~ ~ ~ ~ ~ ~ 1 ~ masked'){
+		/function tbg:main/building/floor/replace
+	}
+	/clone ~ ~ ~ ~ ~ ~ ~ 1 ~
+}
+
+
+#file: ./floor/replace
+/fill ~-6 ~-2 ~6 ~11 ~-2 ~23 stone
+/summon area_effect_cloud ~-6 ~-2 ~6 {Tags:["floor.clone"]}
+/clone ~ ~ ~ ~ ~ ~ -10 33 -13
+/scoreboard players set #x.i tbg 0
+at(@e[tag=floor.clone]){
+	/function tbg:main/building/floor/replace/loop.x
+}
+
+
+#file: ./floor/replace/loop.x
+/scoreboard players set #z.i tbg 0
+at(@e[tag=floor.clone]){
+	/function tbg:main/building/floor/replace/loop.z
+}
+/tp @e[tag=floor.clone] ~1 ~ ~
+/scoreboard players add #x.i tbg 1
+if('score #x.i tbg matches ..17'){
+	at(@e[tag=floor.clone]){
+		/function tbg:main/building/floor/replace/loop.x
+	}
+}
+
+
+#file: ./floor/replace/loop.z
+/clone -10 33 -13 -10 33 -13 ~ ~ ~
+/tp @e[tag=floor.clone] ~ ~ ~1
+/scoreboard players add #z.i tbg 1
+if('score #z.i tbg matches ..17'){
+	at(@e[tag=floor.clone]){
+		/function tbg:main/building/floor/replace/loop.z
+	}
+}

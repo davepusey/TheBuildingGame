@@ -1,0 +1,50 @@
+#file: ./team_members
+if('score team_members options matches 0'){
+	/tellraw @a ["",{"selector":"@s","color":"yellow"},{"translate":" has enabled teams"}]
+	/scoreboard objectives setdisplay belowName p_id
+}
+
+if('score @s sneaking matches 1..'){
+	/scoreboard players remove team_members options 1
+} else {
+	/scoreboard players add team_members options 1
+}
+
+if('score team_members options matches 11..'){
+	/scoreboard players set team_members options 0
+}
+if('score team_members options matches ..-1'){
+	/scoreboard players set team_members options 10
+}
+
+if('score team_members options matches 0'){
+	as(@a[scores={team=1..}]){
+		/function tbg:main/lobby/options/team_members/leave
+		function "team_members/leave"{
+			/title @s actionbar ""
+			/tag @s add tag
+			/scoreboard players set #var options 1
+			as(@a[tag=!tag]),
+			if('score @s team = @a[tag=tag,limit=1] team'){
+				/scoreboard players set #var options 0
+			}
+			if('score #var options matches 0'){
+				/function tbg:main/lobby/play/id
+			}
+			/tag @s remove tag
+			/scoreboard players reset @s team
+		}
+	}
+	/scoreboard players reset * team
+	/scoreboard players reset * team.invite
+	/kill @e[tag=team]
+	/scoreboard objectives setdisplay belowName
+
+	/tellraw @a ["",{"selector":"@s","color":"yellow"},{"translate":" has disabled teams"}]
+}
+if('score team_members options matches 1'){
+	/tellraw @a ["",{"selector":"@s","color":"yellow"},{"translate":" has set team members\u2019 limit to\u00a7a Unlimited"}]
+}
+if('score team_members options matches 2..'){
+	/tellraw @a ["",{"selector":"@s","color":"yellow"},{"translate":" has set team members\u2019 limit to "},{"score":{"name":"team_members","objective":"options"},"color":"aqua"}]
+}

@@ -1,0 +1,13 @@
+#file: ./summon_team_bat
+/tag @s add tag
+as(@a[team=players,scores={team=1..}]),
+if('score @s team = @e[tag=tag,limit=1] team'){
+	/function tbg:next/writing/summon_team_bat/check
+}
+/tag @s remove tag
+
+#file: ./summon_team_bat/check
+if('entity @e[tag=tag]'){
+	/function tbg:next/writing/summon_bat
+}
+/tag @e[tag=tag] remove tag

@@ -1,0 +1,4 @@
+#file: ./back
+/scoreboard players remove #stage tbg 2
+/function tbg:main/showing/run
+/function tbg:next

@@ -1,0 +1,112 @@
+#file: ./joined
+if('score #stage tbg matches 0..'){
+	/function tbg:joined/game
+}
+if('score #stage tbg matches -2'){
+	/function tbg:joined/lobby
+}
+/scoreboard players operation @s time = time options
+/scoreboard players set @s invite -2147483648
+/scoreboard players set @s kick -2147483648
+/scoreboard players reset @s joined
+
+#file: ./joined/lobby
+/gamemode creative @s
+positioned('0.0 64 0.0'){
+	/teleport @s[distance=96..] ~ ~ ~
+}
+/function tbg:check_id
+
+#file: ./joined/game
+if('score @s in_game matches 1'){
+	/gamemode creative @s
+
+	if(!'score @s[team=players] stage = #stage tbg'){
+		/function tbg:next/teleport
+		if('score #stage tbg < #count id'){
+			if('score #odd tbg matches 1'){
+				if('score @s team matches 1..'){
+					/tag @s add tag2
+					at(@s),
+					as(@e[tag=team]),
+					if(!'score @s stage = #stage tbg'){
+						run function "joined/game/team" {
+							at(@a[tag=tag2]),
+							positioned('~-16 ~-4 ~-4') {
+								/clone -16 0 -16 15 31 15 ~ ~ ~
+								/kill @e[type=!player,dx=30,dy=32,dz=30]
+							}
+							/function tbg:next/building/summon_team_field
+							/scoreboard players set #var joined 1
+							at(@e[type=bat,tag=!old,tag=new]){
+								/fill ~ ~-1 ~ ~-1 ~-1 ~ air replace anvil
+							}
+							/scoreboard players operation @s stage = #stage tbg
+						}
+					}
+					/tag @s remove tag2
+				} else {
+					at(@s),
+					positioned('~-16 ~-4 ~-4') {
+						/clone -16 0 -16 15 31 15 ~ ~ ~
+						/kill @e[type=!player,dx=30,dy=32,dz=30]
+					}
+					/function tbg:next/building/summon_field
+				}
+			}
+			if('score #odd tbg matches 0'){
+				if('score @s team matches 1..'){
+					as(@e[tag=team]),
+					if(!'score @s stage = #stage tbg'){
+						/function tbg:next/writing/summon_team_bat
+						/scoreboard players operation @s stage = #stage tbg
+					}
+				} else {
+					/function tbg:next/writing/summon_bat
+				}
+				/tag @e[type=bat,tag=rename,tag=!old] add new
+			}
+		}
+	}
+	/scoreboard players operation @s stage = #stage tbg
+
+	if('score @s team matches 1..'){
+		if('score #odd tbg matches 0'){
+			if('score #stage tbg matches 0'){
+				/tellraw @s ["",{"translate":"Come up with a phrase","bold":true},"\n",{"translate":"Rename the name tag in the anvil into a word or phrase and use it on the bat."}]
+			}
+			if('score #stage tbg matches 2..'){
+				/tellraw @s ["",{"translate":"Figure out what you see","bold":true},"\n",{"translate":"Look at this build and describe it by renaming the bat."}]
+			}
+			at(@e[tag=renamed]),
+			if('score @e[tag=renamed,distance=..0.01,limit=1] id = @s id'){
+				/scoreboard players reset @s ready
+			}
+		}
+		if('score #odd tbg matches 1'){
+			/function tbg:next/building/message
+			/scoreboard players set #var joined 0
+			at(@e[tag=field]),
+			if('score @e[tag=field,distance=..0.01,limit=1] id = @s id'){
+				/scoreboard players set #var joined 1
+			}
+			if('score #var joined matches 0'){
+				/scoreboard players reset @s ready
+			}
+		}
+	}
+} else {
+	/team join spectators @s
+	/scoreboard players set @s id 0
+	/gamemode spectator @s
+	/teleport @r[team=players]
+}
+
+/scoreboard players reset @s accept
+/scoreboard players reset @s help
+/scoreboard players reset @s my_id
+/scoreboard players reset @s invite
+/scoreboard players reset @s kick
+/scoreboard players reset @s leave
+/scoreboard players reset @s time
+/scoreboard players reset @s ztbg_click

@@ -1,0 +1,15 @@
+#file: ./play
+/function tbg:main/lobby/play/message
+/function tbg:main/lobby/play/id
+
+#file: ./play/id
+/scoreboard players add #count pre-id 1
+/scoreboard players operation @s pre-id = #count pre-id
+/function tbg:check_id
+
+#file: ./play/message
+at(@s){
+	/playsound block.note_block.chime player @s ~ ~ ~ 1 0
+}
+/tellraw @s {"translate":"You joined the\u00a7e players"}
+/team join players @s

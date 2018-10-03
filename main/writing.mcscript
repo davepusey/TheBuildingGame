@@ -1,0 +1,29 @@
+#file: ./writing
+/execute in the_nether as @a[distance=0..] in overworld run function tbg:next/teleport
+/execute in the_end as @a[distance=0..] in overworld run function tbg:next/teleport
+
+if('score #stage tbg matches 0'){
+	/title @a[team=players] actionbar {"translate":"Come up with a phrase"}
+}
+if('score #stage tbg matches 2..'){
+	/title @a[team=players] actionbar {"translate":"Figure out what you see"}
+}
+
+as(@e[tag=rename,tag=!renamed]),
+at(@s),
+if(!'entity @s[nbt={CustomName:"{\\"translate\\":\\"Rename me!\\"}"}]') {
+	as(@a[team=players]),
+	if('score @s id = @e[tag=rename,distance=0,limit=1] id') {
+		/scoreboard players reset @s ready
+		/tellraw @a ["",{"selector":"@s"},{"translate":" is ready."}]
+	}
+	as(@a),
+	at(@s){
+		/playsound entity.ender_eye.death master @s ~ ~ ~
+	}
+	/tag @s add renamed
+}
+
+if(!'entity @e[type=bat,tag=rename,tag=!renamed]'){
+	/function tbg:next
+}

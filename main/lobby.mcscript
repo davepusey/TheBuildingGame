@@ -1,0 +1,45 @@
+#file: ./lobby
+/execute in the_nether as @a[distance=0..] in overworld run teleport @s 0.0 64 0.0 0 0
+/execute in the_end as @a[distance=0..] in overworld run teleport @s 0.0 64 0.0 0 0
+
+
+/execute store result score #players tbg if entity @a[team=players]
+if('score #players tbg < #players-pre tbg'){
+	/function tbg:check_id
+}
+/scoreboard players operation #players-pre tbg = #players tbg
+
+
+as(@a){
+	/function tbg:main/lobby/triggers
+}
+
+/function tbg:main/lobby/team
+
+as(@a[x=-5.0,y=64.0,z=4.0,dx=2,dy=1,dz=2,team=!players]),
+at(@s){
+	/function tbg:main/lobby/play
+}
+
+as(@a[x=2.0,y=64.0,z=4.0,dx=2,dy=1,dz=2,team=players]){
+	/function tbg:main/lobby/spectate_area
+	function "lobby/spectate_area" {
+		if('score @s team matches 1..'){
+			/title @s actionbar {"translate":"To join the spectators, leave your team: %s","color":"red","with":[{"text":"/trigger leave","color":"yellow"}]}
+		} else {
+			/function tbg:main/lobby/spectate
+		}
+	}
+}
+
+as(@a),
+if(!'score @s ztbg_click matches 0'){
+	/function tbg:main/lobby/options
+}
+
+as(@a),
+if(!'score @s time = time options'){
+	/function tbg:main/lobby/options/time
+}
+
+/scoreboard players reset @a[scores={sneaking=1..}] sneaking

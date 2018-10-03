@@ -1,0 +1,16 @@
+#file: ./player_init
+/scoreboard players add #count p_id 1
+/scoreboard players operation @s p_id = #count p_id
+/scoreboard players set @s invite -2147483648
+/scoreboard players set @s kick -2147483648
+/scoreboard players operation @s time = time options
+
+/clear @s
+/team join spectators @s
+/gamemode creative @s
+/teleport @s 0.0 64 0.0 0 0
+
+if('score #stage tbg matches 0..'){
+	/gamemode spectator @s
+	/teleport @r[team=players]
+}

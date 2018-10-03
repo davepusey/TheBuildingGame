@@ -1,0 +1,14 @@
+#file: ./as_animation
+/scoreboard players add as_animation options 1
+if('score as_animation options matches 2..'){
+	/scoreboard players set as_animation options 0
+}
+if('score as_animation options matches 1'){
+	/tellraw @a ["",{"selector":"@s","color":"yellow"},{"translate":" has enabled armor stands animation"}]
+}
+if('score as_animation options matches 0'){
+	/replaceitem entity @a inventory.21 air
+	/replaceitem entity @a inventory.22 air
+
+	/tellraw @a ["",{"selector":"@s","color":"yellow"},{"translate":" has disabled armor stands animation"}]
+}

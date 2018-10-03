@@ -1,0 +1,48 @@
+#file: ./kick
+if('score @s kick matches -2147483647'){
+	/tellraw @s {"translate":"Usage: %s","color":"red","with":[{"translate":"\/trigger kick set <ID>"}]}
+} else {
+	if(!'score @s team matches 1..'){
+		/tellraw @s {"translate":"You\u2019re not a member of any team","color":"red"}
+	} else {
+		/scoreboard players operation #var kick = @s kick
+		as(@a),
+		if('score @s p_id = #var kick'){
+			/tag @s add tag
+		}
+		if('entity @a[tag=tag]'){
+			if(!'score @a[tag=tag,limit=1] team = @s team'){
+				/tellraw @s {"translate":"This player isn\u2019t in your team","color":"red"}
+			} else {
+				/tellraw @s ["",{"selector":"@a[tag=tag]"},{"translate":" was kicked from your team"}]
+				/tellraw @a[tag=tag] ["",{"selector":"@s"},{"translate":" kicked you from the team"}]
+
+				/tag @s add tag2
+				as(@a[tag=!tag2,tag=!tag]),
+				if('score @s team = @a[tag=tag2,limit=1] team'){
+					/tellraw @s ["",{"selector":"@a[tag=tag2]"},{"translate":" kicked "},{"selector":"@a[tag=tag]"},{"translate":" from the team"}]
+				}
+				/tag @s remove tag2
+
+				as(@a[tag=tag]){
+					/tag @s add tag2
+					as(@a[tag=!tag2]),
+					if('score @s team = @a[tag=tag2,limit=1] team'){
+						/tag @a remove tag2
+					}
+					if(!'entity @s[tag=tag2]'){
+						/function tbg:main/lobby/play/id
+					}
+					/tag @s remove tag2
+
+					/function tbg:main/lobby/team/_leave
+				}
+			}
+		} else {
+			/tellraw @s {"translate":"No player was found","color":"red"}
+		}
+		/tag @a remove tag
+	}
+}
+
+/scoreboard players set @s kick -2147483648

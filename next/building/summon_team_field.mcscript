@@ -1,0 +1,13 @@
+#file: ./summon_team_field
+/tag @s add tag
+as(@a[team=players,scores={team=1..}]),
+if('score @s team = @e[tag=tag,limit=1] team'){
+	/function tbg:next/building/summon_team_field/check
+}
+/tag @s remove tag
+
+#file: ./summon_team_field/check
+if('entity @e[tag=tag]'){
+	/function tbg:next/building/summon_field
+}
+/tag @e[tag=tag] remove tag

@@ -1,0 +1,35 @@
+#file: ./start
+if('score #count id matches ..2'){
+	/tellraw @a {"translate":"You need at least %s players or teams to start the game.","with":[{"text":"3","color":"gold"}]}
+} else {
+	/scoreboard players set #success tbg 1
+	if('score team_members options matches 2..'){
+		as(@e[tag=team]){
+			/function tbg:main/lobby/options/start/team_members
+			function "start/team_members"{
+				/function tbg:main/lobby/team/count_members
+				if('score #count_members team > team_members options'){
+					/scoreboard players set #success tbg 0
+					/scoreboard players operation #var team = @s team
+					as(@a[scores={team=1..}]),
+					if('score @s team = #var team'){
+						/tag @s add tag
+					}
+					/tellraw @a ["",{"translate":"The maximum number of members in the team {"},{"selector":"@a[tag=tag]"},{"translate":"} has been exceeded."}]
+					/tag @a remove tag
+				}
+			}
+		}
+	}
+	if('score #success tbg matches 1'){
+		/function tbg:check_id
+
+		/tellraw @a [{"text":"","bold":true},{"selector":"@s","color":"yellow"},{"translate":" started the game!"}]
+		/scoreboard players set #stage tbg 0
+		as(@a[team=players]){
+			/function tbg:next/teleport
+		}
+		/scoreboard players set #waiting tbg 0
+		/scoreboard players set #stage tbg -1
+	}
+}

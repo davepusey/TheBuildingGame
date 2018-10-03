@@ -1,0 +1,58 @@
+#file: ./update
+/fill -2 66 7 1 64 7 air
+
+/setblock 1 66 7 wall_sign{Text1:"null",Text2:"[{\"translate\":\"[Info]\",\"color\":\"blue\",\"clickEvent\":{\"action\":\"run_command\",\"value\":\"/trigger ztbg_click set 8\"}}]",Text3:"null",Text4:"null"}
+/setblock 1 65 7 wall_sign{Text1:"null",Text2:"[{\"translate\":\"[Start]\",\"color\":\"light_purple\",\"clickEvent\":{\"action\":\"run_command\",\"value\":\"/trigger ztbg_click set -800\"}}]",Text3:"null",Text4:"null"}
+
+if('score @s time matches ..0'){
+	/setblock -1 66 7 wall_sign{Text1:"{\"translate\":\"Time for\"}",Text2:"{\"translate\":\"building\"}",Text3:"{\"translate\":\"Unlimited\",\"color\":\"dark_green\",\"clickEvent\":{\"action\":\"run_command\",\"value\":\"/trigger ztbg_click set 5\"}}",Text4:"null"}
+}
+if('score @s time matches 3600..'){
+	/setblock -1 66 7 wall_sign{Text1:"{\"translate\":\"Time for\"}",Text2:"{\"translate\":\"building\"}",Text3:"[{\"score\":{\"name\":\"#h\",\"objective\":\"time\"},\"color\":\"dark_aqua\",\"clickEvent\":{\"action\":\"run_command\",\"value\":\"/trigger ztbg_click set 5\"}},{\"translate\":\"h\"},\" \",{\"score\":{\"name\":\"#min\",\"objective\":\"time\"}},{\"translate\":\"min\"},\" \",{\"score\":{\"name\":\"#s\",\"objective\":\"time\"}},{\"translate\":\"s\"}]",Text4:"null"}
+}
+if('score @s time matches 60..3599'){
+	/setblock -1 66 7 wall_sign{Text1:"{\"translate\":\"Time for\"}",Text2:"{\"translate\":\"building\"}",Text3:"[{\"score\":{\"name\":\"#min\",\"objective\":\"time\"},\"color\":\"dark_aqua\",\"clickEvent\":{\"action\":\"run_command\",\"value\":\"/trigger ztbg_click set 5\"}},{\"translate\":\"min\"},\" \",{\"score\":{\"name\":\"#s\",\"objective\":\"time\"}},{\"translate\":\"s\"}]",Text4:"null"}
+}
+if('score @s time matches 1..59'){
+	/setblock -1 66 7 wall_sign{Text1:"{\"translate\":\"Time for\"}",Text2:"{\"translate\":\"building\"}",Text3:"[{\"score\":{\"name\":\"#s\",\"objective\":\"time\"},\"color\":\"dark_aqua\",\"clickEvent\":{\"action\":\"run_command\",\"value\":\"/trigger ztbg_click set 5\"}},{\"translate\":\"s\"}]",Text4:"null"}
+}
+
+if('score _open_time options matches 1'){
+	/data merge block -1 66 7 {Text4:"{\"translate\":\"[\\u2190 Back]\",\"color\":\"dark_red\"}"}
+	/setblock -1 65 7 wall_sign{Text1:"null",Text2:"{\"translate\":\"[\\u00b110 seconds]\",\"color\":\"dark_blue\",\"clickEvent\":{\"action\":\"run_command\",\"value\":\"/trigger ztbg_click set 6\"}}",Text3:"null",Text4:"null"}
+	/setblock -2 65 7 wall_sign{Text1:"null",Text2:"{\"translate\":\"[\\u00b11 minute]\",\"color\":\"dark_blue\",\"clickEvent\":{\"action\":\"run_command\",\"value\":\"/trigger ztbg_click set 7\"}}",Text3:"null",Text4:"null"}
+	/setblock -2 66 7 wall_sign{Text1:"null",Text2:"[{\"text\":\"[\",\"color\":\"dark_blue\",\"clickEvent\":{\"action\":\"run_command\",\"value\":\"/trigger time set 0\"}},{\"translate\":\"Unlimited\"},\"]\"]",Text3:"null",Text4:"null"}
+
+}
+
+if('score _open_time options matches 0'){
+	if('score as_customization options matches 1'){
+		/setblock -1 65 7 wall_sign{Text1:"{\"translate\":\"Armor stands\"}",Text2:"{\"translate\":\"customization\"}",Text3:"{\"translate\":\"Enabled \\u2714\",\"color\":\"dark_green\",\"clickEvent\":{\"action\":\"run_command\",\"value\":\"/trigger ztbg_click set 3\"}}",Text4:"null"}
+		if('score as_animation options matches 1'){
+			/setblock -2 65 7 wall_sign{Text1:"{\"translate\":\"Armor stands\"}",Text2:"{\"translate\":\"animation\"}",Text3:"{\"translate\":\"Enabled \\u2714\",\"color\":\"dark_green\",\"clickEvent\":{\"action\":\"run_command\",\"value\":\"/trigger ztbg_click set 2\"}}",Text4:"null"}
+		}
+		if('score as_animation options matches 0'){
+			/setblock -2 65 7 wall_sign{Text1:"{\"translate\":\"Armor stands\"}",Text2:"{\"translate\":\"animation\"}",Text3:"{\"translate\":\"Disabled \\u2716\",\"color\":\"dark_red\",\"clickEvent\":{\"action\":\"run_command\",\"value\":\"/trigger ztbg_click set 2\"}}",Text4:"null"}
+		}
+	}
+	if('score as_customization options matches 0'){
+		/setblock -1 65 7 wall_sign{Text1:"{\"translate\":\"Armor stands\"}",Text2:"{\"translate\":\"customization\"}",Text3:"{\"translate\":\"Disabled \\u2716\",\"color\":\"dark_red\",\"clickEvent\":{\"action\":\"run_command\",\"value\":\"/trigger ztbg_click set 3\"}}",Text4:"null"}
+		if('score as_animation options matches 1'){
+			/setblock -2 65 7 wall_sign{Text1:"{\"translate\":\"Armor stands\"}",Text2:"{\"translate\":\"animation\"}",Text3:"{\"translate\":\"Enabled \\u2714\",\"color\":\"dark_gray\",\"strikethrough\":true}",Text4:"null"}
+		}
+		if('score as_animation options matches 0'){
+			/setblock -2 65 7 wall_sign{Text1:"{\"translate\":\"Armor stands\"}",Text2:"{\"translate\":\"animation\"}",Text3:"{\"translate\":\"Disabled \\u2716\",\"color\":\"dark_gray\"}",Text4:"null"}
+		}
+	}
+
+
+	if('score team_members options matches 0'){
+		/setblock -2 66 7 wall_sign{Text1:"{\"translate\":\"Team\"}",Text2:"{\"translate\":\"members\"}",Text3:"{\"translate\":\"No teams \\u2716\",\"color\":\"dark_red\",\"clickEvent\":{\"action\":\"run_command\",\"value\":\"/trigger ztbg_click set 4\"}}",Text4:"null"}
+	}
+	if('score team_members options matches 1'){
+		/setblock -2 66 7 wall_sign{Text1:"{\"translate\":\"Team\"}",Text2:"{\"translate\":\"members\"}",Text3:"{\"translate\":\"Unlimited\",\"color\":\"dark_green\",\"clickEvent\":{\"action\":\"run_command\",\"value\":\"/trigger ztbg_click set 4\"}}",Text4:"null"}
+	}
+	if('score team_members options matches 2..'){
+		/setblock -2 66 7 wall_sign{Text1:"{\"translate\":\"Team\"}",Text2:"{\"translate\":\"members\"}",Text3:"{\"score\":{\"name\":\"team_members\",\"objective\":\"options\"},\"color\":\"dark_aqua\",\"clickEvent\":{\"action\":\"run_command\",\"value\":\"/trigger ztbg_click set 4\"}}",Text4:"null"}
+	}
+}

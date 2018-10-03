@@ -1,0 +1,43 @@
+#file: ./leave
+if(!'score @s team matches 1..'){
+	/tellraw @s {"translate":"You\u2019re not a member of any team","color":"red"}
+}
+
+if('score @s team matches 1..'){
+	/tellraw @s {"translate":"You left the team"}
+
+	/tag @s add tag
+	as(@a[tag=!tag]),
+	if('score @s team = @a[tag=tag,limit=1] team'){
+		/tellraw @s ["",{"selector":"@a[tag=tag]","color":"yellow"},{"translate":" left your team"}]
+		/tag @a remove tag
+	}
+	if(!'entity @s[tag=tag]'){
+		/function tbg:main/lobby/play/id
+	}
+	/tag @s remove tag
+	/function tbg:main/lobby/team/_leave
+}
+
+/scoreboard players reset @s leave
+
+
+
+#file: ./_leave
+/title @s actionbar ""
+
+/scoreboard players operation #var team = @s team
+/scoreboard players set #var2 team 0
+as(@a),
+if('score @s team = #var team'){
+	/scoreboard players add #var2 team 1
+}
+
+if('score #var2 team matches 1'){
+	as(@a),
+	if('score @s team.invite = #var team'){
+		/tellraw @s {"translate":"Your invitation has been canceled"}
+		/scoreboard players reset @s team.invite
+	}
+}
+/scoreboard players reset @s team

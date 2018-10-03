@@ -1,0 +1,19 @@
+#file: ./as_customization
+/scoreboard players add as_customization options 1
+if('score as_customization options matches 2..'){
+	/scoreboard players set as_customization options 0
+}
+if('score as_customization options matches 1'){
+	/tellraw @a ["",{"selector":"@s","color":"yellow"},{"translate":" has enabled armor stands customization"}]
+}
+if('score as_customization options matches 0'){
+	/tellraw @a ["",{"selector":"@s","color":"yellow"},{"translate":" has disabled armor stands customization"}]
+
+	/replaceitem entity @a inventory.18 air
+	/replaceitem entity @a inventory.19 air
+	/replaceitem entity @a inventory.20 air
+	if('score as_animation options matches 1'){
+		/replaceitem entity @a inventory.21 air
+		/replaceitem entity @a inventory.22 air
+	}
+}

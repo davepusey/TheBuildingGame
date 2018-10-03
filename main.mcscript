@@ -1,0 +1,98 @@
+#file: ./main
+#rejoined player init
+as(@a[scores={joined=1..}]){
+	/function tbg:joined
+}
+
+#new player init
+as(@a),
+if(!'score @s p_id matches 1..'){
+	/function tbg:player_init
+}
+
+#lobby
+if('score #stage tbg matches -2'){
+	/function tbg:main/lobby
+}
+
+#stages
+if('score #stage tbg matches 0..' && 'score #stage tbg < #count id'){
+	run function "main/stages"{
+		/scoreboard players operation #odd tbg = #stage tbg
+		/scoreboard players operation #odd tbg %= #2 tbg
+		if('score #odd tbg matches 0'){
+			/function tbg:main/writing
+		}
+		if('score #odd tbg matches 1'){
+			/function tbg:main/building
+		}
+	}
+}
+
+#waiting for chunk loading
+if('score #stage tbg matches -1'){
+	run function "main/waiting"{
+		/scoreboard players add #waiting tbg 1
+		if('score #waiting tbg matches 30'){
+			/function tbg:check_id
+			if('score #count id matches 3..'){
+				/function tbg:next
+			} else {
+				/teleport @a 0.0 64 0.0 0 0
+				/tellraw @a {"translate":"You need at least %s players or teams to start the game.","with":[{"text":"3","color":"gold"}]}
+				/scoreboard players set #stage tbg -2
+			}
+		}
+	}
+}
+
+#showing
+if('score #stage tbg >= #count id'){
+	/function tbg:main/showing
+}
+
+#other
+/scoreboard players reset @a[scores={drop.lingering=1..}] drop.lingering
+
+/replaceitem entity @a inventory.26 barrier
+/replaceitem entity @a inventory.25 structure_void
+/replaceitem entity @a inventory.24 debug_stick
+
+#armor stand datapacks
+if('score as_customization options matches 1'){
+	/function tbg:main/armor_stand
+}
+
+#entity
+as(@e[type=item,nbt={Age:1200s}]){
+	/data merge entity @s {Age:-32768s}
+}
+as(@e[type=item,nbt={Age:40s}]){
+	/data merge entity @s {Motion:[]}
+}
+as('@e[type=!arrow,type=!dragon_fireball,type=!egg,type=!ender_pearl,type=!experience_bottle,type=!falling_block,type=!item_frame,type=!painting,type=!potion,type=!snowball,type=!trident,type=!tnt]'){
+	run function "main/entity"{
+		/data merge entity @s {Fire:-20}
+		if('entity @s[tag=!entity_init]'){
+			run function "main/entity/init"{
+				/data merge entity @s {NoAI:1,NoGravity:1,PersistenceRequired:1b,Silent:1b,ShowArms:1b,Invulnerable:1b,Health:0.001f,Attributes:[{Name:"generic.maxHealth",Base:0.001}]}
+				at(@s){
+					/teleport @s ~ ~ ~ facing entity @p[team=players] eyes
+				}
+				/tag @s add entity_init
+			}
+		}
+	}
+}
+as(@e[type=tnt,nbt={Fuse:1s}]),
+at(@s){
+	run function "main/tnt"{
+		/kill @s
+		/summon creeper ~ ~ ~ {ExplosionRadius:3,Fuse:0}
+	}
+}
+
+as(@a),
+at(@s){
+	/teleport @s[y=0,dy=-10] ~ 1 ~
+}

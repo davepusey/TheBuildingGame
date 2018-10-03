@@ -1,0 +1,219 @@
+#file: ./next
+/scoreboard players add #stage tbg 1
+/scoreboard players operation @a[team=players] stage = #stage tbg
+as(@e[tag=team]){
+	run function "next/team_stage_sync"{
+		/scoreboard players operation #var team = @s team
+		as(@a),
+		if('score @s team = #var team'){
+			/scoreboard players set #var team -1
+		}
+		if('score #var team matches -1'){
+			/scoreboard players operation @s stage = #stage tbg
+		}
+	}
+}
+
+/clear @a[team=players]
+
+if('score #stage tbg matches 0'){
+	as(@a[team=players]){
+		/function tbg:next/teleport
+		at(@s){
+			/clone -16 32 -16 -11 46 -11 ~-3 ~-11 ~-1
+		}
+	}
+	/gamemode spectator @a[team=!players]
+	as(@a[team=!players]){
+		/teleport @r[team=players]
+	}
+	/scoreboard objectives setdisplay belowName
+	/scoreboard players set @a[team=players] in_game 1
+	/scoreboard players reset @a accept
+	/scoreboard players reset @a help
+	/scoreboard players reset @a my_id
+	/scoreboard players reset @a invite
+	/scoreboard players reset @a kick
+	/scoreboard players reset @a leave
+	/scoreboard players reset @a time
+	/scoreboard players reset @a ztbg_click
+	/kill @e[type=bat,tag=rename]
+	/scoreboard players set #odd tbg 1
+}
+
+
+if('score #stage tbg <= #count id'){
+
+	if('score #stage tbg matches 1..'){
+		as(@a[team=players]){
+			/function tbg:next/teleport
+		}
+	}
+
+	if('score #odd tbg matches 1'){
+		as(@e[tag=field]),
+		at(@s){
+			/fill ~ ~ ~ ~ ~1 ~ air
+			/kill @s
+		}
+		/kill @e[tag=floor]
+		at(@a[team=players]),
+		positioned('~-16 ~-4 ~-4'){
+			as(@e[type=item,dx=30,dy=32,dz=30]){
+				/data merge entity @s {PickupDelay:32767s}
+			}
+			as(@e[type=armor_stand,dx=30,dy=32,dz=30]){
+				/data merge entity @s {DisabledSlots:2039583}
+			}
+			/effect give @e[type=!player,dx=30,dy=32,dz=30] resistance 1000000 127 true
+		}
+
+
+	}
+
+	if('score #odd tbg matches 0'){
+		at(@a[team=players]),
+		positioned('~-16 ~-4 ~-4') {
+			/clone -16 0 -16 15 31 15 ~ ~ ~
+			/kill @e[type=!player,dx=30,dy=32,dz=30]
+		}
+		at(@e[type=bat,tag=!old,tag=new]){
+			/fill ~ ~-1 ~ ~-1 ~-1 ~ air replace anvil
+		}
+	}
+
+	/teleport @e[type=bat,tag=!old,tag=new] 0 0 0
+
+	if(!'score #stage tbg = #count id'){
+		/scoreboard players set @a[team=players] ready 0
+
+		if('score #odd tbg matches 1'){
+			/replaceitem entity @a[team=players] hotbar.0 name_tag
+			as(@a[team=players]),
+			if(!'score @s team matches 1..'){
+				/function tbg:next/writing/summon_bat
+			}
+			as(@e[tag=team]){
+				/function tbg:next/writing/summon_team_bat
+			}
+			/tag @e[type=bat,tag=!old,tag=new] add old
+			/tag @e[type=bat,tag=rename,tag=!old] add new
+			if('score #stage tbg matches 0'){
+				/tag @e[type=bat,tag=rename] add first
+			}
+
+			/title @a times 10 40 10
+			/scoreboard players operation #var2 tbg = #stage tbg
+			/scoreboard players add #var2 tbg 1
+			if(!'score #stage tbg matches 0'){
+				/title @a title {"translate":"Writing"}
+				/scoreboard objectives modify ready displayname {"translate":"Writing"}
+				/title @a[team=players] subtitle {"translate":"Figure out what you see"}
+				/tellraw @a[team=players] ["",{"translate":"Figure out what you see","bold":true},{"translate":" (stage ","color":"gray"},{"score":{"objective":"tbg","name":"#var2"},"color":"gray"},{"translate":" of ","color":"gray"},{"score":{"objective":"id","name":"#count"},"color":"gray"},{"translate":")","color":"gray"},"\n",{"translate":"Look at this build and describe it by renaming the bat."}]
+			}
+			if('score #stage tbg matches 0'){
+				/title @a title {"translate":"Thinking of"}
+				/scoreboard objectives modify ready displayname {"translate":"Thinking of"}
+				/title @a[team=players] subtitle {"translate":"Come up with a phrase"}
+				/tellraw @a[team=players] ["",{"translate":"Come up with a phrase","bold":true},{"translate":" (stage ","color":"gray"},{"score":{"objective":"tbg","name":"#var2"},"color":"gray"},{"translate":" of ","color":"gray"},{"score":{"objective":"id","name":"#count"},"color":"gray"},{"translate":")","color":"gray"},"\n",{"translate":"Rename the name tag in the anvil into a word or phrase and use it on the bat."}]
+			}
+			/bossbar set timer visible false
+		}
+
+		if('score #odd tbg matches 0'){
+			as(@a[team=players]){
+				/function tbg:next/building/message
+				if(!'score @s team matches 1..'){
+					/function tbg:next/building/summon_field
+				}
+			}
+			as(@e[tag=team]){
+				/function tbg:next/building/summon_team_field
+			}
+
+			if('score time options matches 1..'){
+				/bossbar set timer visible true
+				/bossbar set timer style progress
+				/scoreboard players operation #time tbg = time options
+				/execute store result bossbar timer max run scoreboard players get time options
+				/execute store result bossbar timer value run scoreboard players get time options
+				/function tbg:main/building/timer
+			}
+			/title @a times 10 40 10
+			/title @a title {"translate":"Building"}
+			/title @a subtitle {"translate":"Build the phrase"}
+
+			/scoreboard objectives modify ready displayname {"translate":"Building"}
+		}
+	}
+}
+
+
+
+if('score #stage tbg = #count id'){
+	if('score #odd tbg matches 0'){
+		as(@a[team=players]){
+			/function tbg:next/showing/phrase
+		}
+	}
+	if('score #odd tbg matches 1'){
+		as(@a[team=players]){
+			/function tbg:next/showing/building
+		}
+	}
+	/scoreboard players reset * ready
+	/title @a times 10 40 10
+	/title @a title {"translate":"Round complete"}
+	/title @a subtitle {"translate":"Build recap begins"}
+	/bossbar set timer visible false
+}
+
+
+
+if('score #stage tbg >= #count id'){
+	/scoreboard players operation #var tbg = #zpre tbg
+	/scoreboard players operation #var tbg -= #count id
+	if('score #var tbg matches -1..' && 'entity @e[type=potion,nbt={Potion:{tag:{display:{Name:"{\\"translate\\":\\"Back\\\\u00a77 (%s)\\",\\"italic\\":false,\\"with\\":[{\\"keybind\\":\\"key.use\\"}]}"}}}}]'){
+		as(@a[team=players]){
+			/function tbg:next/teleport
+		}
+	}
+	if('score #var tbg matches -1..' && 'entity @e[type=item,nbt={Item:{tag:{display:{Name:"{\\"translate\\":\\"Back\\\\u00a77 (%s)\\",\\"italic\\":false,\\"with\\":[{\\"keybind\\":\\"key.use\\"}]}"}}}}]'){
+		as(@a[team=players]){
+			/function tbg:next/teleport
+		}
+	}
+	if('score #zpre tbg matches 0'){
+		as(@a[team=players]){
+			/function tbg:next/teleport
+		}
+	}
+	if('score #zpre tbg matches 1..' && 'score #odd tbg matches 0' && 'entity @e[type=potion,nbt={Potion:{tag:{display:{Name:"{\\"translate\\":\\"Back\\\\u00a77 (%s)\\",\\"italic\\":false,\\"with\\":[{\\"keybind\\":\\"key.use\\"}]}"}}}}]'){
+		as(@a[team=players]){
+			/function tbg:next/teleport
+		}
+	}
+	if('score #zpre tbg matches 1..' && 'score #odd tbg matches 0' && 'entity @e[type=item,nbt={Item:{tag:{display:{Name:"{\\"translate\\":\\"Back\\\\u00a77 (%s)\\",\\"italic\\":false,\\"with\\":[{\\"keybind\\":\\"key.use\\"}]}"}}}}]'){
+		as(@a[team=players]){
+			/function tbg:next/teleport
+		}
+	}
+	if('score #odd tbg matches 1' && 'entity @e[type=potion,nbt={Potion:{tag:{display:{Name:"{\\"translate\\":\\"Next\\\\u00a77 (%s)\\",\\"italic\\":false,\\"with\\":[{\\"keybind\\":\\"key.use\\"}]}"}}}}]'){
+		as(@a[team=players]){
+			/function tbg:next/teleport
+		}
+	}
+	if('score #odd tbg matches 1' && 'entity @e[type=item,nbt={Item:{tag:{display:{Name:"{\\"translate\\":\\"Next\\\\u00a77 (%s)\\",\\"italic\\":false,\\"with\\":[{\\"keybind\\":\\"key.use\\"}]}"}}}}]'){
+		as(@a[team=players]){
+			/function tbg:next/teleport
+		}
+	}
+
+	/scoreboard players operation #var tbg = #count id
+	/scoreboard players operation #var tbg *= #count id
+	/scoreboard players operation #var tbg += #count id
+	/scoreboard players add #var tbg 1
+	if('score #var tbg = #stage tbg'){
+		/function tbg:next/game_over
+	}
+}

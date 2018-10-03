@@ -1,0 +1,25 @@
+#file: ./check_id
+/scoreboard players set #check_id id 0
+/function tbg:check_id/run
+/tag @a remove checked
+
+/scoreboard players set #count id 0
+/scoreboard players operation #count id > @a[team=players] id
+
+
+#file: ./check_id/run
+/scoreboard players add #check_id id 1
+/scoreboard players set #var pre-id 2147483647
+/scoreboard players operation #var pre-id < @a[team=players,tag=!checked] pre-id
+
+as(@a[team=players,tag=!checked]),
+if('score @s pre-id = #var pre-id'){
+	run function "check_id/run/checked"{
+		/scoreboard players operation @s id = #check_id id
+		/tag @s add checked
+	}
+}
+
+if('entity @a[team=players,tag=!checked]'){
+	/function tbg:check_id/run
+}

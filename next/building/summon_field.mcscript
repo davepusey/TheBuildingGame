@@ -1,0 +1,11 @@
+#file: ./summon_field
+at(@s),
+positioned('~2.5 ~ ~') {
+	/summon area_effect_cloud ~ ~ ~ {Duration:2147483647,Tags:["field"]}
+	/scoreboard players operation @e[tag=field,distance=..0.1] id = @s id
+}
+at(@s),
+positioned('~-2.5 ~-0.35 ~') {
+	/summon area_effect_cloud ~ ~ ~ {Duration:2147483647,CustomName:"{\"translate\":\"Floor Changer\"}",CustomNameVisible:1b,Tags:["floor"]}
+	/clone ~ ~-0.65 ~ ~ ~-0.65 ~ ~ 1 ~
+}

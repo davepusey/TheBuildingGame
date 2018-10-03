@@ -1,0 +1,65 @@
+#file: ./timer
+/bossbar set timer players @a
+
+/execute store result bossbar timer value run scoreboard players get #time tbg
+
+if('score #time tbg matches 3600..'){
+	/scoreboard players operation #display_time tbg = #time tbg
+	/scoreboard players operation #display_time tbg /= #3600 tbg
+	/bossbar set timer name ["",{"translate":"Time Remaining: "},{"score":{"objective":"tbg","name":"#display_time"},"color":"gold"},{"translate":"h"}]
+}
+
+if('score #time tbg matches 60..3599'){
+	/scoreboard players operation #display_time tbg = #time tbg
+	/scoreboard players operation #display_time tbg /= #60 tbg
+	/bossbar set timer name ["",{"translate":"Time Remaining: "},{"score":{"objective":"tbg","name":"#display_time"},"color":"gold"},{"translate":"min"}]
+}
+
+if('score #time tbg matches ..59'){
+	/scoreboard players operation #display_time tbg = #time tbg
+	/scoreboard players operation #display_time tbg %= #60 tbg
+	/bossbar set timer name ["",{"translate":"Time Remaining: "},{"score":{"objective":"tbg","name":"#display_time"},"color":"gold","bold":true},{"translate":"s"}]
+}
+
+
+if('score #time tbg matches 60'){
+	/title @a times 0 40 10
+	/title @a title ""
+	/title @a subtitle {"translate":"%s seconds remaining","with":[{"text":"60","color":"yellow"}]}
+	at(@a){
+		/playsound block.note_block.chime master @a ~ ~ ~ 2 1.3
+	}
+	/bossbar set timer max 60
+	/bossbar set timer style notched_6
+}
+
+if('score #time tbg matches 30'){
+	/title @a times 0 40 10
+	/title @a title ""
+	/title @a subtitle {"translate":"%s seconds remaining","with":[{"text":"30","color":"yellow"}]}
+	at(@a){
+		/playsound block.note_block.chime master @a ~ ~ ~ 2 1.3
+	}
+}
+
+if('score #time tbg matches 10'){
+	/bossbar set timer max 10
+	/bossbar set timer style notched_10
+}
+if('score #time tbg matches 1..10'){
+	/title @a times 0 10 10
+	/title @a title ""
+	/title @a subtitle {"score":{"objective":"tbg","name":"#display_time"},"color":"yellow"}
+	at(@a){
+		/playsound block.note_block.chime master @a ~ ~ ~ 2 1.3
+	}
+}
+
+
+if('score #time tbg matches ..0'){
+	/tellraw @a {"translate":"Time is up!","color":"gold"}
+	/function tbg:next
+}
+/scoreboard players set #ttime tbg 0
+
+/scoreboard players remove #time tbg 1

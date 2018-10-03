@@ -1,0 +1,7 @@
+#file: ./count_members
+/scoreboard players operation #var team = @s team
+/scoreboard players set #count_members team 0
+as(@a[scores={team=1..}]),
+if('score @s team = #var team'){
+	/scoreboard players add #count_members team 1
+}

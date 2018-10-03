@@ -1,0 +1,66 @@
+#file: ./invite
+if('score team_members options matches 0'){
+	/tellraw @s {"translate":"Teams are disabled","color":"red"}
+} else {
+	if('entity @s[team=!players]'){
+		/tellraw @s {"translate":"You must join the players before creating a team","color":"red"}
+	} else {
+		if('score @s p_id = @s invite'){
+			/tellraw @s {"translate":"You cannot invite yourself!","color":"red"}
+		}
+		if('score @s invite matches -2147483647'){
+			/tellraw @s {"translate":"Usage: %s","color":"red","with":[{"translate":"\/trigger invite set <ID>"}]}
+		}
+		if(!'score @s p_id = @s invite' && 'score @s invite matches -2147483646..'){
+			/scoreboard players set #success tbg 1
+			if('score @s team matches 1..'){
+				/function tbg:main/lobby/team/count_members
+				if('score team_members options matches 2..' && 'score #count_members team >= team_members options'){
+					/scoreboard players set #success tbg 0
+					/tellraw @s {"translate":"Your team reached the maximum number of members","color":"red"}
+				}
+			}
+			if('score #success tbg matches 1'){
+				/scoreboard players operation #var invite = @s invite
+				as(@a),
+				if('score @s p_id = #var invite'){
+					/tag @s add tag
+				}
+				if('entity @a[tag=tag]'){
+					if('score @a[tag=tag,limit=1] team = @s team'){
+						/tellraw @s {"translate":"This player is already in your team","color":"red"}
+					}
+					if('score @a[tag=tag,limit=1] team.invite = @s team'){
+						/tellraw @s {"translate":"This player is already invited to your team","color":"red"}
+					}
+
+					if(!'score @a[tag=tag,limit=1] team = @s team' && !'score @a[tag=tag,limit=1] team.invite = @s team'){
+						if(!'score @s team matches 1..'){
+							/function tbg:main/lobby/team/invite.create_team
+						}
+						/tellraw @s [{"translate":"You invited "},{"selector":"@a[tag=tag]","color":"yellow"}]
+						/tellraw @a[tag=tag] ["",{"selector":"@s","color":"yellow"},{"translate":" is inviting you to the team"}," ",{"translate":"[Accept]","color":"gold","clickEvent":{"action":"run_command","value":"/trigger accept"},"hoverEvent":{"action":"show_text","value":{"translate":"Accept the last invitation","color":"gold"}}}]
+						/scoreboard players operation @a[tag=tag] team.invite = @s team
+					}
+				} else {
+					/tellraw @s {"translate":"No player was found","color":"red"}
+				}
+				/tag @a remove tag
+			}
+		}
+	}
+}
+
+/scoreboard players set @s invite -2147483648
+
+
+#file: ./invite.create_team
+/scoreboard players set #var team 0
+/scoreboard players operation #var team > @e[tag=team] team
+/scoreboard players add #var team 1
+/scoreboard players operation @s team = #var team
+/summon area_effect_cloud 0 0 0 {Tags:["team"],Duration:2147483647}
+as(@e[tag=team]),
+if(!'score @s team matches 1..'){
+	/scoreboard players operation @s team = #var team
+}

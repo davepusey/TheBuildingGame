@@ -1,0 +1,21 @@
+#file: ./summon_bat
+at(@s){
+	if('score #stage tbg matches 1..'){
+		positioned('~ ~1 ~-2'){
+			/function tbg:next/writing/summon_bat_
+		}
+	}
+	if('score #stage tbg matches 0'){
+		positioned('~ ~1 ~3') {
+			/function tbg:next/writing/summon_bat_
+		}
+	}
+}
+
+
+#file: ./summon_bat_
+/summon bat ~ ~ ~ {NoGravity:1b,Invulnerable:1,NoAI:1,Silent:1,ActiveEffects:[{Id:11,Amplifier:5,Duration:2147483647,ShowParticles:0b}],Tags:["rename"],CustomName:"{\"translate\":\"Rename me!\"}"}
+/teleport @e[type=bat,tag=rename,distance=0] ~ ~ ~ facing entity @p[team=players] eyes
+/scoreboard players operation @e[type=bat,tag=rename,distance=0] id = @s id
+/scoreboard players operation @e[type=bat,tag=rename,distance=0] stage = #stage tbg
+/fill ~ ~-1 ~ ~-1 ~-1 ~ anvil[facing=west]

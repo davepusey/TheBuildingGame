@@ -1,0 +1,11 @@
+#file: ./used
+if('score #sub tbg matches 2..' && 'entity @e[type=potion,nbt={Potion:{tag:{display:{Name:"{\\"translate\\":\\"Back\\\\u00a77 (%s)\\",\\"italic\\":false,\\"with\\":[{\\"keybind\\":\\"key.use\\"}]}"}}}}]'){
+	/function tbg:main/showing/back
+}
+
+if('entity @e[type=potion,nbt={Potion:{tag:{display:{Name:"{\\"translate\\":\\"Next\\\\u00a77 (%s)\\",\\"italic\\":false,\\"with\\":[{\\"keybind\\":\\"key.use\\"}]}"}}}}]'){
+	/function tbg:main/showing/next
+}
+
+/kill @e[type=potion,nbt={Potion:{tag:{display:{Name:"{\"translate\":\"Back\\u00a77 (%s)\",\"italic\":false,\"with\":[{\"keybind\":\"key.use\"}]}"}}}}]
+/kill @e[type=potion,nbt={Potion:{tag:{display:{Name:"{\"translate\":\"Next\\u00a77 (%s)\",\"italic\":false,\"with\":[{\"keybind\":\"key.use\"}]}"}}}}]

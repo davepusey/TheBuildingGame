@@ -1,0 +1,35 @@
+#file: ./team
+as(@a){
+	if(!'score @s help matches 0'){
+		/function tbg:main/lobby/team/help
+	}
+	if(!'score @s accept matches 0'){
+		/function tbg:main/lobby/team/accept
+	}
+	if(!'score @s invite matches -2147483648'){
+		/function tbg:main/lobby/team/invite
+	}
+	if(!'score @s kick matches -2147483648'){
+		/function tbg:main/lobby/team/kick
+	}
+	if(!'score @s leave matches 0'){
+		/function tbg:main/lobby/team/leave
+	}
+	if(!'score @s my_id matches 0'){
+		/function tbg:main/lobby/team/my_id
+	}
+}
+
+
+as(@e[tag=team]){
+	/function tbg:main/lobby/team/actionbar
+	function "team/actionbar"{
+		/scoreboard players operation #var team = @s team
+		as(@a),
+		if('score @s team = #var team'){
+			/tag @s add tag
+		}
+		/title @a[tag=tag] actionbar ["",{"translate":"Your team: ","color":"gold","bold":true},{"selector":"@a[tag=tag]"}]
+		/tag @a remove tag
+	}
+}

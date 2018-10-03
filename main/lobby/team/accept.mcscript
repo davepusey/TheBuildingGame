@@ -1,0 +1,42 @@
+#file: ./accept
+if('score team_members options matches 0'){
+	/tellraw @s {"translate":"Teams are disabled","color":"red"}
+} else {
+	if(!'score @s team.invite matches 1..'){
+		/tellraw @s {"translate":"You have no invites","color":"red"}
+	}
+	if('score @s team.invite matches 1..'){
+		/scoreboard players operation #var team.invite = @s team.invite
+		as(@a),
+		if('score @s team = #var team.invite'){
+			/tag @s add tag
+		}
+		if('entity @a[tag=tag]'){
+			/scoreboard players set #success tbg 1
+			as(@a[tag=tag,limit=1]){
+				/function tbg:main/lobby/team/count_members
+			}
+			if('score team_members options matches 2..' && 'score #count_members team >= team_members options'){
+				/scoreboard players set #success tbg 0
+				/tellraw @s {"translate":"The team that invited you has reached the maximum number of members","color":"red"}
+			}
+			if('score #success tbg matches 1'){
+				if('entity @s[team=!players]'){
+					/function tbg:main/lobby/play/message
+				}
+				/function tbg:main/lobby/team/_leave
+				/scoreboard players operation @s pre-id = @a[tag=tag,limit=1] pre-id
+				/function tbg:check_id
+				/scoreboard players operation @s team = @s team.invite
+				/tellraw @a[tag=tag] ["",{"selector":"@s"},{"translate":" joined your team"}]
+				/tellraw @s ["",{"translate":"You joined the team {"},{"selector":"@a[tag=tag]"},{"translate":"}"}]
+				/scoreboard players reset @s team.invite
+			}
+		} else {
+			/tellraw @s {"translate":"No members were found from the team invited you","color":"red"}
+		}
+		/tag @a remove tag
+	}
+}
+
+/scoreboard players reset @s accept

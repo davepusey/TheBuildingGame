@@ -1,0 +1,8 @@
+#file: ./building
+/scoreboard players operation #var tbg = @s id
+
+at(@s),
+as(@e[type=bat,tag=first]),
+if('score #var tbg = @s id'){
+	/tellraw @a[team=players,distance=0] ["",{"translate":"Round complete","bold":true},"\n",{"translate":"Your phrase \u00ab"},{"selector":"@s","color":"gray"},{"translate":"\u00bb evolved into this build."}]
+}

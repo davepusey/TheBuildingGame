@@ -1,0 +1,11 @@
+#file: ./spectate
+/team join spectators @s
+
+/scoreboard players reset @s pre-id
+/scoreboard players reset @s id
+/function tbg:check_id
+
+at(@s){
+	/playsound block.note_block.bell player @s ~ ~ ~ 1 0
+}
+/tellraw @s {"translate":"You joined the\u00a77 spectators"}

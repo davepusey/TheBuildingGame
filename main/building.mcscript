@@ -1,0 +1,61 @@
+#file: ./building
+/execute in the_nether as @a[distance=0..] in overworld run function tbg:next/teleport
+/execute in the_end as @a[distance=0..] in overworld run function tbg:next/teleport
+
+as(@a[team=players]){
+	/function tbg:main/building/message
+}
+
+as(@e[tag=field]),
+at(@s),
+if('block ~ ~1 ~ stone_button[powered=true]') {
+	/function tbg:main/building/found
+}
+
+at(@e[tag=field]){
+	/clone -10 32 -15 -10 33 -15 ~ ~ ~
+}
+
+as(@e[tag=floor]),
+at(@s),
+positioned('~ ~-0.65 ~'){
+	/function tbg:main/building/floor
+}
+
+if(!'entity @e[tag=field]'){
+	/function tbg:next
+}
+
+if('score time options matches 1..'){
+	/scoreboard players add #ttime tbg 1
+	if('score #ttime tbg matches 20'){
+		/function tbg:main/building/timer
+	}
+}
+
+#file: ./building/message
+/scoreboard players operation #id_msg tbg = @s id
+/scoreboard players add #id_msg tbg 1
+if('score #id_msg tbg > #count id'){
+	/scoreboard players set #id_msg tbg 1
+}
+
+at(@s),
+as(@e[type=bat,tag=!old,tag=new]),
+if('score #id_msg tbg = @s id'){
+	/title @a[team=players,distance=0] actionbar ["",{"translate":"Build: "},{"selector":"@s","color":"gold"}]
+}
+
+
+#file: ./building/found
+as(@a[team=players]),
+if('score @s id = @e[tag=field,distance=..0.1,limit=1] id') {
+	/scoreboard players reset @s ready
+	/tellraw @a ["",{"selector":"@s"},{"translate":" is ready."}]
+}
+as(@a),
+at(@s){
+	/playsound entity.ender_eye.death master @s ~ ~ ~
+}
+/fill ~ ~ ~ ~ ~1 ~ air
+/kill @s
