@@ -1,6 +1,9 @@
 #file: ./showing
-/execute in the_nether as @a[distance=0..] in overworld run function tbg:next/teleport
-/execute in the_end as @a[distance=0..] in overworld run function tbg:next/teleport
+/execute as @a[nbt=!{Dimension:0}] in overworld run function tbg:next/teleport
+
+as(@e[tag=saving,nbt={Age:1}]){
+	/function tbg:next/showing/saved
+}
 
 /effect clear @a invisibility
 as(@a[gamemode=creative]),
@@ -10,24 +13,20 @@ positioned('^ ^ ^2.001'){
 }
 as(@a[gamemode=creative]),
 at(@s),
-if('entity @a[distance=0.0001..0.5]'){
+if('entity @a[distance=0.001..0.5]'){
 	/effect give @s invisibility 1 0 true
 }
 
-/scoreboard players operation #sub tbg = #stage tbg
-/scoreboard players operation #sub tbg -= #count id
-if('score #sub tbg matches 2..'){
-	/replaceitem entity @a[team=players] hotbar.0 lingering_potion{CustomPotionColor:16656406,HideFlags:32,display:{Name:"{\"translate\":\"Back\\u00a77 (%s)\",\"italic\":false,\"with\":[{\"keybind\":\"key.use\"}]}"}}
-}
-/replaceitem entity @a[team=players] hotbar.1 lingering_potion{CustomPotionColor:1363445,HideFlags:32,display:{Name:"{\"translate\":\"Next\\u00a77 (%s)\",\"italic\":false,\"with\":[{\"keybind\":\"key.use\"}]}"}}
-
-if('entity @a[team=players,scores={drop.lingering=1..}]'){
-	/function tbg:main/showing/dropped
+as(@e[tag=vote-saving,nbt={Age:1}]){
+	/function tbg:main/showing/vote-saved
 }
 
-if('entity @a[team=players,scores={use.lingering=1..}]'){
-	/function tbg:main/showing/used
+/replaceitem entity @a[team=players] hotbar.3 lingering_potion{CustomPotionColor:1363445,HideFlags:32,display:{Name:"{\"translate\":\"Next\\u00a77 (%s)\",\"italic\":false,\"with\":[{\"keybind\":\"key.use\"}]}"}}
+if('score #odd tbg matches 1'){
+	/function tbg:main/showing/vote
 }
 
-/kill @e[type=item,nbt={Item:{tag:{display:{Name:"{\"translate\":\"Back\\u00a77 (%s)\",\"italic\":false,\"with\":[{\"keybind\":\"key.use\"}]}"}}}}]
+if('entity @e[type=potion,nbt={Potion:{tag:{display:{Name:"{\\"translate\\":\\"Next\\\\u00a77 (%s)\\",\\"italic\\":false,\\"with\\":[{\\"keybind\\":\\"key.use\\"}]}"}}}}]'){
+	/function tbg:main/showing/run
+}
 /kill @e[type=item,nbt={Item:{tag:{display:{Name:"{\"translate\":\"Next\\u00a77 (%s)\",\"italic\":false,\"with\":[{\"keybind\":\"key.use\"}]}"}}}}]

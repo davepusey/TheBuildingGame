@@ -32,7 +32,7 @@ if('score @s in_game matches 1'){
 					if(!'score @s stage = #stage tbg'){
 						run function "joined/game/team" {
 							at(@a[tag=tag2]),
-							positioned('~-16 ~-4 ~-4') {
+							positioned('~-16 ~-9 ~-4') {
 								/clone -16 0 -16 15 31 15 ~ ~ ~
 								/kill @e[type=!player,dx=30,dy=32,dz=30]
 							}
@@ -47,7 +47,7 @@ if('score @s in_game matches 1'){
 					/tag @s remove tag2
 				} else {
 					at(@s),
-					positioned('~-16 ~-4 ~-4') {
+					positioned('~-16 ~-9 ~-4') {
 						/clone -16 0 -16 15 31 15 ~ ~ ~
 						/kill @e[type=!player,dx=30,dy=32,dz=30]
 					}
@@ -66,6 +66,11 @@ if('score @s in_game matches 1'){
 				}
 				/tag @e[type=bat,tag=rename,tag=!old] add new
 			}
+		}
+		if('score #stage tbg >= #count id'){
+			/scoreboard players set @s drop.sugar 0
+			/scoreboard players set @s drop.redstone 0
+			/scoreboard players set @s drop.glowstone 0
 		}
 	}
 	/scoreboard players operation @s stage = #stage tbg

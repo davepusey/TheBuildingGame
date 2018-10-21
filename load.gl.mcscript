@@ -20,18 +20,22 @@
 /scoreboard objectives add time trigger {"text":"time","color":"yellow"}
 ################################################################################
 /scoreboard objectives remove joined
-/scoreboard objectives remove drop.lingering
-/scoreboard objectives remove use.lingering
 /scoreboard objectives remove in_game
 /scoreboard objectives remove ztbg_click
 /scoreboard objectives remove sneak
+/scoreboard objectives remove use.lingering
+#/scoreboard objectives remove drop.sugar
+#/scoreboard objectives remove drop.redstone
+#/scoreboard objectives remove drop.glowstone
 
 /scoreboard objectives add joined custom:leave_game {"text":"Event: Joined","color":"gold"}
-/scoreboard objectives add drop.lingering dropped:lingering_potion {"text":"Event: Dropped Lingering Potion","color":"gold"}
-/scoreboard objectives add use.lingering used:lingering_potion {"text":"Event: Used Lingering Potion","color":"gold"}
 /scoreboard objectives add in_game dummy {"text":"Is the player in the game?"}
 /scoreboard objectives add ztbg_click trigger {"text":"ztbg_click","color":"yellow"}
 /scoreboard objectives add sneaking custom:sneak_time {"text":"Sneaking","color":"dark_green"}
+/scoreboard objectives add use.lingering used:lingering_potion {"text":"Event: Used Lingering Potion","color":"gold"}
+/scoreboard objectives add drop.sugar dropped:sugar {"text":"Vote: Ingenious","color":"green"}
+/scoreboard objectives add drop.redstone dropped:redstone {"text":"Vote: Beautiful","color":"green"}
+/scoreboard objectives add drop.glowstone dropped:glowstone_dust {"text":"Vote: Funny","color":"green"}
 ################################################################################
 /scoreboard objectives remove pre-id
 /scoreboard objectives remove id
@@ -65,8 +69,10 @@
 /team modify players collisionRule never
 
 /scoreboard players set #2 tbg 2
+/scoreboard players set #10 tbg 10
 /scoreboard players set #60 tbg 60
 /scoreboard players set #3600 tbg 3600
+/scoreboard players set #992 tbg 992
 
 /kill @e[tag=field]
 /bossbar add timer ""

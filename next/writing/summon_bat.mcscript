@@ -19,3 +19,6 @@ at(@s){
 /scoreboard players operation @e[type=bat,tag=rename,distance=0] id = @s id
 /scoreboard players operation @e[type=bat,tag=rename,distance=0] stage = #stage tbg
 /fill ~ ~-1 ~ ~-1 ~-1 ~ anvil[facing=west]
+if('score #stage tbg matches 0'){
+	/tag @e[type=bat,tag=rename,distance=0] add first
+}

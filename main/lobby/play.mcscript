@@ -11,5 +11,5 @@
 at(@s){
 	/playsound block.note_block.chime player @s ~ ~ ~ 1 0
 }
-/tellraw @s {"translate":"You joined the\u00a7e players"}
+/title @s actionbar {"translate":"You joined the\u00a7e players"}
 /team join players @s

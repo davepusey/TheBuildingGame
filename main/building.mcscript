@@ -1,6 +1,11 @@
 #file: ./building
-/execute in the_nether as @a[distance=0..] in overworld run function tbg:next/teleport
-/execute in the_end as @a[distance=0..] in overworld run function tbg:next/teleport
+/execute as @a[nbt=!{Dimension:0}] in overworld run function tbg:next/teleport
+
+as(@a[team=spectators]),
+at(@s),
+if(@e[tag=renamed,dx=-32,dy=-32,dz=-32]){
+	/title @s actionbar [{"translate":"You\u2019re looking at: "},{"selector":"@e[tag=renamed,dx=-32,dy=-32,dz=-32]","color":"gold"}]
+}
 
 as(@a[team=players]){
 	/function tbg:main/building/message
@@ -57,5 +62,7 @@ as(@a),
 at(@s){
 	/playsound entity.ender_eye.death master @s ~ ~ ~
 }
-/fill ~ ~ ~ ~ ~1 ~ air
+/summon area_effect_cloud ~-18 ~-10 ~-4 {Duration:2147483647,Tags:["save"]}
+/setblock ~ ~1 ~ air
+/setblock ~ ~ ~ air
 /kill @s

@@ -28,7 +28,7 @@ at(@s){
 		/teleport @s ~15.5 ~11 ~14
 	}
 	if('score #var tbg matches 1..'){
-		/teleport @s ~15.5 ~4 ~4
+		/teleport @s ~15.5 ~9 ~4
 	}
 	/function tbg:next/teleport.z
 }

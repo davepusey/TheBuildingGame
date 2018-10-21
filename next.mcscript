@@ -37,7 +37,6 @@ if('score #stage tbg matches 0'){
 	/scoreboard players reset @a leave
 	/scoreboard players reset @a time
 	/scoreboard players reset @a ztbg_click
-	/kill @e[type=bat,tag=rename]
 	/scoreboard players set #odd tbg 1
 }
 
@@ -53,12 +52,14 @@ if('score #stage tbg <= #count id'){
 	if('score #odd tbg matches 1'){
 		as(@e[tag=field]),
 		at(@s){
-			/fill ~ ~ ~ ~ ~1 ~ air
+			/summon area_effect_cloud ~-18 ~-10 ~-4 {Duration:2147483647,Tags:["save"]}
+			/setblock ~ ~1 ~ air
+			/setblock ~ ~ ~ air
 			/kill @s
 		}
 		/kill @e[tag=floor]
 		at(@a[team=players]),
-		positioned('~-16 ~-4 ~-4'){
+		positioned('~-16 ~-9 ~-4'){
 			as(@e[type=item,dx=30,dy=32,dz=30]){
 				/data merge entity @s {PickupDelay:32767s}
 			}
@@ -73,22 +74,28 @@ if('score #stage tbg <= #count id'){
 
 	if('score #odd tbg matches 0'){
 		at(@a[team=players]),
-		positioned('~-16 ~-4 ~-4') {
+		positioned('~-16 ~-9 ~-4') {
 			/clone -16 0 -16 15 31 15 ~ ~ ~
 			/kill @e[type=!player,dx=30,dy=32,dz=30]
 		}
-		at(@e[type=bat,tag=!old,tag=new]){
+
+		as(@e[type=bat,tag=!old,tag=new]),
+		at(@s){
 			/fill ~ ~-1 ~ ~-1 ~-1 ~ air replace anvil
+			if('score #stage tbg matches 1'){
+				/teleport ~-15.5 ~-12 ~15
+			} else {
+				/teleport ~-15.5 ~-10 ~30
+			}
 		}
 	}
-
-	/teleport @e[type=bat,tag=!old,tag=new] 0 0 0
 
 	if(!'score #stage tbg = #count id'){
 		/scoreboard players set @a[team=players] ready 0
 
 		if('score #odd tbg matches 1'){
 			/replaceitem entity @a[team=players] hotbar.0 name_tag
+
 			as(@a[team=players]),
 			if(!'score @s team matches 1..'){
 				/function tbg:next/writing/summon_bat
@@ -98,9 +105,6 @@ if('score #stage tbg <= #count id'){
 			}
 			/tag @e[type=bat,tag=!old,tag=new] add old
 			/tag @e[type=bat,tag=rename,tag=!old] add new
-			if('score #stage tbg matches 0'){
-				/tag @e[type=bat,tag=rename] add first
-			}
 
 			/title @a times 10 40 10
 			/scoreboard players operation #var2 tbg = #stage tbg
@@ -171,41 +175,27 @@ if('score #stage tbg = #count id'){
 
 
 if('score #stage tbg >= #count id'){
-	/scoreboard players operation #var tbg = #zpre tbg
-	/scoreboard players operation #var tbg -= #count id
-	if('score #var tbg matches -1..' && 'entity @e[type=potion,nbt={Potion:{tag:{display:{Name:"{\\"translate\\":\\"Back\\\\u00a77 (%s)\\",\\"italic\\":false,\\"with\\":[{\\"keybind\\":\\"key.use\\"}]}"}}}}]'){
-		as(@a[team=players]){
-			/function tbg:next/teleport
-		}
-	}
-	if('score #var tbg matches -1..' && 'entity @e[type=item,nbt={Item:{tag:{display:{Name:"{\\"translate\\":\\"Back\\\\u00a77 (%s)\\",\\"italic\\":false,\\"with\\":[{\\"keybind\\":\\"key.use\\"}]}"}}}}]'){
-		as(@a[team=players]){
-			/function tbg:next/teleport
-		}
-	}
+	/scoreboard players set @a drop.sugar 0
+	/scoreboard players set @a drop.redstone 0
+	/scoreboard players set @a drop.glowstone 0
+
+	/scoreboard players set #success tbg 0
 	if('score #zpre tbg matches 0'){
+		/scoreboard players set #success tbg 1
+	}
+	if('score #odd tbg matches 1'){
+		/scoreboard players set #success tbg 1
+	}
+
+	if('score #success tbg matches 1'){
 		as(@a[team=players]){
 			/function tbg:next/teleport
 		}
-	}
-	if('score #zpre tbg matches 1..' && 'score #odd tbg matches 0' && 'entity @e[type=potion,nbt={Potion:{tag:{display:{Name:"{\\"translate\\":\\"Back\\\\u00a77 (%s)\\",\\"italic\\":false,\\"with\\":[{\\"keybind\\":\\"key.use\\"}]}"}}}}]'){
-		as(@a[team=players]){
-			/function tbg:next/teleport
-		}
-	}
-	if('score #zpre tbg matches 1..' && 'score #odd tbg matches 0' && 'entity @e[type=item,nbt={Item:{tag:{display:{Name:"{\\"translate\\":\\"Back\\\\u00a77 (%s)\\",\\"italic\\":false,\\"with\\":[{\\"keybind\\":\\"key.use\\"}]}"}}}}]'){
-		as(@a[team=players]){
-			/function tbg:next/teleport
-		}
-	}
-	if('score #odd tbg matches 1' && 'entity @e[type=potion,nbt={Potion:{tag:{display:{Name:"{\\"translate\\":\\"Next\\\\u00a77 (%s)\\",\\"italic\\":false,\\"with\\":[{\\"keybind\\":\\"key.use\\"}]}"}}}}]'){
-		as(@a[team=players]){
-			/function tbg:next/teleport
-		}
-	}
-	if('score #odd tbg matches 1' && 'entity @e[type=item,nbt={Item:{tag:{display:{Name:"{\\"translate\\":\\"Next\\\\u00a77 (%s)\\",\\"italic\\":false,\\"with\\":[{\\"keybind\\":\\"key.use\\"}]}"}}}}]'){
-		as(@a[team=players]){
-			/function tbg:next/teleport
+		at(@p[team=players]){
+			positioned('~-15.5 ~-10 ~-4'),
+			as(@e[distance=..0.1,tag=save]){
+				/function tbg:next/showing/saving
+			}
 		}
 	}
 

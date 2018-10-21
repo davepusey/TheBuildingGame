@@ -1,6 +1,15 @@
 #file: ./writing
-/execute in the_nether as @a[distance=0..] in overworld run function tbg:next/teleport
-/execute in the_end as @a[distance=0..] in overworld run function tbg:next/teleport
+/execute as @a[nbt=!{Dimension:0}] in overworld run function tbg:next/teleport
+
+as(@a[team=spectators]),
+at(@s),
+if(@e[tag=renamed,tag=old,dx=-32,dy=-32,dz=-32]){
+	/title @s actionbar [{"translate":"You\u2019re looking at: "},{"selector":"@e[tag=renamed,tag=old,dx=-32,dy=-32,dz=-32]","color":"gold"}]
+}
+
+as(@e[type=item,nbt={PickupDelay:40s,Item:{id:"minecraft:name_tag"}}]){
+	/data merge entity @s {PickupDelay:7,Thrower:{}}
+}
 
 if('score #stage tbg matches 0'){
 	/title @a[team=players] actionbar {"translate":"Come up with a phrase"}

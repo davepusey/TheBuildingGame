@@ -1,0 +1,21 @@
+#file: ./vote
+as(@a[team=players]){
+	/function tbg:main/showing/vote/replaceitem
+}
+/scoreboard players set @a[scores={drop.sugar=2..}] drop.sugar 0
+/scoreboard players set @a[scores={drop.redstone=2..}] drop.redstone 0
+/scoreboard players set @a[scores={drop.glowstone=2..}] drop.glowstone 0
+
+/kill @e[type=item,nbt={Item:{tag:{display:{Name:"{\"translate\":\"Ingenious\\u00a77 (%s)\",\"italic\":false,\"with\":[{\"keybind\":\"key.drop\"}]}"}}}}]
+/kill @e[type=item,nbt={Item:{tag:{display:{Name:"{\"translate\":\"Beautiful\\u00a77 (%s)\",\"italic\":false,\"with\":[{\"keybind\":\"key.drop\"}]}"}}}}]
+/kill @e[type=item,nbt={Item:{tag:{display:{Name:"{\"translate\":\"Funny\\u00a77 (%s)\",\"italic\":false,\"with\":[{\"keybind\":\"key.drop\"}]}"}}}}]
+
+
+#file: ./vote/replaceitem
+/replaceitem entity @s[scores={drop.sugar=..0}] hotbar.5 sugar{display:{Name:"{\"translate\":\"Ingenious\\u00a77 (%s)\",\"italic\":false,\"with\":[{\"keybind\":\"key.drop\"}]}"}}
+/replaceitem entity @s[scores={drop.redstone=..0}] hotbar.6 redstone{display:{Name:"{\"translate\":\"Beautiful\\u00a77 (%s)\",\"italic\":false,\"with\":[{\"keybind\":\"key.drop\"}]}"}}
+/replaceitem entity @s[scores={drop.glowstone=..0}] hotbar.7 glowstone_dust{display:{Name:"{\"translate\":\"Funny\\u00a77 (%s)\",\"italic\":false,\"with\":[{\"keybind\":\"key.drop\"}]}"}}
+
+/replaceitem entity @s[scores={drop.sugar=1..}] hotbar.5 sugar{Enchantments:[{}],display:{Name:"{\"translate\":\"Ingenious\\u00a77 (%s)\",\"italic\":false,\"with\":[{\"keybind\":\"key.drop\"}]}"}}
+/replaceitem entity @s[scores={drop.redstone=1..}] hotbar.6 redstone{Enchantments:[{}],display:{Name:"{\"translate\":\"Beautiful\\u00a77 (%s)\",\"italic\":false,\"with\":[{\"keybind\":\"key.drop\"}]}"}}
+/replaceitem entity @s[scores={drop.glowstone=1..}] hotbar.7 glowstone_dust{Enchantments:[{}],display:{Name:"{\"translate\":\"Funny\\u00a77 (%s)\",\"italic\":false,\"with\":[{\"keybind\":\"key.drop\"}]}"}}

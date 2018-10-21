@@ -1,7 +1,5 @@
 #file: ./lobby
-/execute in the_nether as @a[distance=0..] in overworld run teleport @s 0.0 64 0.0 0 0
-/execute in the_end as @a[distance=0..] in overworld run teleport @s 0.0 64 0.0 0 0
-
+/execute as @a[nbt=!{Dimension:0}] in overworld run teleport @s 0.0 64 0.0 0 0
 
 /execute store result score #players tbg if entity @a[team=players]
 if('score #players tbg < #players-pre tbg'){
@@ -9,12 +7,18 @@ if('score #players tbg < #players-pre tbg'){
 }
 /scoreboard players operation #players-pre tbg = #players tbg
 
-
 as(@a){
 	/function tbg:main/lobby/triggers
 }
 
 /function tbg:main/lobby/team
+
+if(!'entity @e[tag=loading]'){
+	/function tbg:main/lobby/viewer
+}
+as(@e[tag=loading,nbt={Age:1}]){
+	/function tbg:main/lobby/viewer/loaded
+}
 
 as(@a[x=-5.0,y=64.0,z=4.0,dx=2,dy=1,dz=2,team=!players]),
 at(@s){

@@ -1,0 +1,85 @@
+#file: ./viewer
+
+if('score #save-z tbg matches 16..'){
+	if('block 1 41 -22 stone_button[powered=true]'){
+		/function tbg:main/lobby/viewer/loading
+	}
+	if('block -2 41 -22 stone_button[powered=true]'){
+		/function tbg:main/lobby/viewer/loading
+	}
+	/title @a[x=-16,y=32,z=-48,dx=31,dy=32,dz=31] actionbar {"selector":"@e[tag=renamed,x=15,y=32,z=-17,dx=0,dy=0,dz=0]","color":"yellow"}
+} else {
+	/title @a[x=-16,y=32,z=-48,dx=31,dy=32,dz=31] actionbar {"translate":"There is no saved builds.","color":"dark_gray"}
+}
+
+/setblock 1 41 -22 stone_button[face=floor]
+/setblock -2 41 -22 stone_button[face=floor]
+
+
+
+#file: ./viewer/loading
+if('block 1 41 -22 stone_button[powered=true]'){
+	/scoreboard players add #load-z tbg 16
+	if('score #load-z tbg > #save-z tbg'){
+		/scoreboard players set #load-z tbg 16
+	}
+}
+if('block -2 41 -22 stone_button[powered=true]'){
+	/scoreboard players remove #load-z tbg 48
+	if('score #load-z tbg matches ..0'){
+		/function tbg:main/lobby/viewer/loading/matches0
+		function "viewer/loading/matches0"{
+			/scoreboard players operation #load-z tbg = #save-z tbg
+			/scoreboard players remove #load-z tbg 16
+		}
+	}
+}
+/summon arrow 0 1 0 {xTile:992,yTile:64,zTile:0,Tags:["chunk_load"]}
+/summon arrow 0 1 0 {xTile:1008,yTile:64,zTile:0,Tags:["chunk_load"]}
+/execute as @e[tag=chunk_load,nbt={zTile:0}] store result entity @s zTile int 1 run scoreboard players get #load-z tbg
+
+
+/scoreboard players add #load-z tbg 16
+/summon arrow 0 1 0 {xTile:992,yTile:64,zTile:0,Tags:["chunk_load"]}
+/summon arrow 0 1 0 {xTile:1008,yTile:64,zTile:0,Tags:["chunk_load"]}
+/execute as @e[tag=chunk_load,nbt={zTile:0}] store result entity @s zTile int 1 run scoreboard players get #load-z tbg
+
+
+/summon area_effect_cloud 0 1 0 {Duration:2,Tags:["loading"]}
+/setblock 1 41 -22 air
+/setblock -2 41 -22 air
+
+
+#file: ./viewer/loaded
+/execute store result entity @s Pos[0] double 1 run scoreboard players get #992 tbg
+/execute store result entity @s Pos[2] double 1 run scoreboard players get #load-z tbg
+
+at(@s),
+positioned('~ 32 ~-16'){
+	/fill ~ ~-1 ~ ~ ~-2 ~ white_concrete
+	/setblock ~ ~-1 ~ structure_block[mode=save]{name:"tbg:load",mode:"SAVE",posY:1,sizeX:32,sizeY:32,sizeZ:32,ignoreEntities:0b}
+	/setblock ~ ~-2 ~ redstone_block
+	/fill ~ ~-1 ~ ~ ~-2 ~ white_concrete
+
+	as(@e[tag=rename,distance=..1,limit=1]){
+		/tellraw @a[x=-16,y=32,z=-48,dx=31,dy=32,dz=31] ["\n",{"selector":"@s","color":"gold","bold":true},"\n",{"translate":"Ingenious: ","color":"gray"},{"score":{"objective":"drop.sugar","name":"@s"}}," ",{"translate":"Beautiful: ","color":"red"},{"score":{"objective":"drop.redstone","name":"@s"}}," ",{"translate":"Funny: ","color":"yellow"},{"score":{"objective":"drop.glowstone","name":"@s"}}]
+	}
+}
+
+
+positioned('15 32 -17'){
+	positioned('~-31 ~ ~-31'){
+		/kill @e[type=!player,dx=31,dy=32,dz=31]
+	}
+	/fill ~ ~ ~ ~ ~1 ~ white_concrete
+	/setblock ~ ~ ~ structure_block[mode=load]{name:"tbg:load",mode:"LOAD",ignoreEntities:0b,rotation:"CLOCKWISE_180"}
+	/setblock ~ ~1 ~ redstone_block
+}
+
+/setblock 1 40 -22 light_blue_concrete
+/setblock -2 40 -22 red_concrete
+/setblock 1 41 -22 stone_button[face=floor]
+/setblock -2 41 -22 stone_button[face=floor]
+
+/kill @s
+/kill @e[tag=chunk_load]

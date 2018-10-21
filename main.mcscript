@@ -75,7 +75,7 @@ as('@e[type=!arrow,type=!dragon_fireball,type=!egg,type=!ender_pearl,type=!exper
 		/data merge entity @s {Fire:-20}
 		if('entity @s[tag=!entity_init]'){
 			run function "main/entity/init"{
-				/data merge entity @s {NoAI:1,NoGravity:1,PersistenceRequired:1b,Silent:1b,ShowArms:1b,Invulnerable:1b,Health:0.001f,Attributes:[{Name:"generic.maxHealth",Base:0.001}]}
+				/data merge entity @s {EggLayTime:2147483647,Fuse:32767s,NoAI:1,NoGravity:1,PersistenceRequired:1b,Silent:1b,ShowArms:1b,Invulnerable:1b,Health:0.001f,Attributes:[{Name:"generic.maxHealth",Base:0.001}]}
 				at(@s){
 					/teleport @s ~ ~ ~ facing entity @p[team=players] eyes
 				}
