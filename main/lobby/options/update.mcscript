@@ -8,12 +8,24 @@ if('score @s time matches ..0'){
 	/setblock -1 66 7 wall_sign{Text1:"{\"translate\":\"Time for\"}",Text2:"{\"translate\":\"building\"}",Text3:"{\"translate\":\"Unlimited\",\"color\":\"dark_green\",\"clickEvent\":{\"action\":\"run_command\",\"value\":\"/trigger ztbg_click set 5\"}}",Text4:"null"}
 }
 if('score @s time matches 3600..'){
+	/scoreboard players operation #h time = @s time
+	/scoreboard players operation #h time /= #3600 tbg
+	/scoreboard players operation #min time = @s time
+	/scoreboard players operation #min time %= #3600 tbg
+	/scoreboard players operation #min time /= #60 tbg
+	/scoreboard players operation #s time = @s time
+	/scoreboard players operation #s time %= #60 tbg
 	/setblock -1 66 7 wall_sign{Text1:"{\"translate\":\"Time for\"}",Text2:"{\"translate\":\"building\"}",Text3:"[{\"score\":{\"name\":\"#h\",\"objective\":\"time\"},\"color\":\"dark_aqua\",\"clickEvent\":{\"action\":\"run_command\",\"value\":\"/trigger ztbg_click set 5\"}},{\"translate\":\"h\"},\" \",{\"score\":{\"name\":\"#min\",\"objective\":\"time\"}},{\"translate\":\"min\"},\" \",{\"score\":{\"name\":\"#s\",\"objective\":\"time\"}},{\"translate\":\"s\"}]",Text4:"null"}
 }
 if('score @s time matches 60..3599'){
+	/scoreboard players operation #min time = @s time
+	/scoreboard players operation #min time /= #60 tbg
+	/scoreboard players operation #s time = @s time
+	/scoreboard players operation #s time %= #60 tbg
 	/setblock -1 66 7 wall_sign{Text1:"{\"translate\":\"Time for\"}",Text2:"{\"translate\":\"building\"}",Text3:"[{\"score\":{\"name\":\"#min\",\"objective\":\"time\"},\"color\":\"dark_aqua\",\"clickEvent\":{\"action\":\"run_command\",\"value\":\"/trigger ztbg_click set 5\"}},{\"translate\":\"min\"},\" \",{\"score\":{\"name\":\"#s\",\"objective\":\"time\"}},{\"translate\":\"s\"}]",Text4:"null"}
 }
 if('score @s time matches 1..59'){
+	/scoreboard players operation #s time = @s time
 	/setblock -1 66 7 wall_sign{Text1:"{\"translate\":\"Time for\"}",Text2:"{\"translate\":\"building\"}",Text3:"[{\"score\":{\"name\":\"#s\",\"objective\":\"time\"},\"color\":\"dark_aqua\",\"clickEvent\":{\"action\":\"run_command\",\"value\":\"/trigger ztbg_click set 5\"}},{\"translate\":\"s\"}]",Text4:"null"}
 }
 

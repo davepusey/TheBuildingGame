@@ -1,5 +1,4 @@
 #file: ./mcscript/load
-/kill @e[tag=rename]
 /kill @e[tag=field]
 /kill @e[tag=floor]
 ################################################################################
@@ -58,7 +57,9 @@
 
 /scoreboard objectives setdisplay sidebar ready
 /scoreboard objectives setdisplay list id
-/scoreboard objectives setdisplay belowName p_id
+if('score team_members options matches 1..'){
+	/scoreboard objectives setdisplay belowName p_id
+}
 
 /team remove spectators
 /team add spectators {"text":"Spectators"}
