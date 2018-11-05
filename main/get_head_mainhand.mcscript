@@ -1,0 +1,4 @@
+#file: ./get_head_mainhand
+/replaceitem block -10 33 -14 container.0 player_head
+/data modify block -10 33 -14 Items[0].tag.SkullOwner set from entity @s SelectedItem.tag.pages[0]
+/drop entity @s weapon.mainhand mine -10 33 -14

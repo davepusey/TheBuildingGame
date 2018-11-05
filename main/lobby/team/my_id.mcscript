@@ -1,3 +1,3 @@
 #file: ./my_id
-/tellraw @s ["",{"translate":"Your ID: "},{"score":{"name":"@s","objective":"p_id"},"color":"gray"}]
+/tellraw @s {"translate":"Your ID: ","with":[{"score":{"name":"@s","objective":"p_id"},"color":"gray"}]}
 /scoreboard players reset @s my_id

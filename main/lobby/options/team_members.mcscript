@@ -1,6 +1,6 @@
 #file: ./team_members
 if('score team_members options matches 0'){
-	/tellraw @a ["",{"selector":"@s","color":"yellow"},{"translate":" has enabled teams"}]
+	/tellraw @a {"translate":"%s has enabled teams","with":[{"selector":"@s","color":"yellow"}]}
 	/scoreboard objectives setdisplay belowName p_id
 }
 
@@ -40,11 +40,11 @@ if('score team_members options matches 0'){
 	/kill @e[tag=team]
 	/scoreboard objectives setdisplay belowName
 
-	/tellraw @a ["",{"selector":"@s","color":"yellow"},{"translate":" has disabled teams"}]
+	/tellraw @a {"translate":"%s has disabled teams","with":[{"selector":"@s","color":"yellow"}]}
 }
 if('score team_members options matches 1'){
-	/tellraw @a ["",{"selector":"@s","color":"yellow"},{"translate":" has set team members\u2019 limit to\u00a7a Unlimited"}]
+	/tellraw @a {"translate":"%s has set team members\u2019 limit to\u00a7a Unlimited","with":[{"selector":"@s","color":"yellow"}]}
 }
 if('score team_members options matches 2..'){
-	/tellraw @a ["",{"selector":"@s","color":"yellow"},{"translate":" has set team members\u2019 limit to "},{"score":{"name":"team_members","objective":"options"},"color":"aqua"}]
+	/tellraw @a {"translate":"%s has set team members\u2019 limit to %s","with":[{"selector":"@s","color":"yellow"},{"score":{"name":"team_members","objective":"options"},"color":"aqua"}]}
 }

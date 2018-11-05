@@ -4,7 +4,7 @@
 as(@a[team=spectators]),
 at(@s),
 if(@e[tag=renamed,dx=-32,dy=-32,dz=-32]){
-	/title @s actionbar [{"translate":"You\u2019re looking at: "},{"selector":"@e[tag=renamed,dx=-32,dy=-32,dz=-32]","color":"gold"}]
+	/title @s actionbar {"translate":"You\u2019re looking at: ","with":[{"selector":"@e[tag=renamed,dx=-32,dy=-32,dz=-32]","color":"gold"}]}
 }
 
 as(@a[team=players]){
@@ -48,7 +48,7 @@ if('score #id_msg tbg > #count id'){
 at(@s),
 as(@e[type=bat,tag=!old,tag=new]),
 if('score #id_msg tbg = @s id'){
-	/title @a[team=players,distance=0] actionbar ["",{"translate":"Build: "},{"selector":"@s","color":"gold"}]
+	/title @a[team=players,distance=0] actionbar {"translate":"Build: %s","with":[{"selector":"@s","color":"gold"}]}
 }
 
 
@@ -56,13 +56,13 @@ if('score #id_msg tbg = @s id'){
 as(@a[team=players]),
 if('score @s id = @e[tag=field,distance=..0.1,limit=1] id') {
 	/scoreboard players reset @s ready
-	/tellraw @a ["",{"selector":"@s"},{"translate":" is ready."}]
+	/tellraw @a {"translate":"%s is ready.","with":[{"selector":"@s"}]}
 }
 as(@a),
 at(@s){
 	/playsound entity.ender_eye.death master @s ~ ~ ~
 }
-/summon area_effect_cloud ~-18 ~-10 ~-4 {Duration:2147483647,Tags:["save"]}
+#/tell Jerozgen /summon area_effect_cloud ~-18 ~-10 ~-4 {Duration:2147483647,Tags:["save"]}
 /setblock ~ ~1 ~ air
 /setblock ~ ~ ~ air
 /kill @s

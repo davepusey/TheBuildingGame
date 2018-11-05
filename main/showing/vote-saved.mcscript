@@ -10,14 +10,6 @@ positioned('~ 32 ~'){
 	/execute store result score @e[tag=rename,distance=..2] drop.redstone if entity @a[team=players,scores={drop.redstone=1..}]
 	/execute store result score @e[tag=rename,distance=..2] drop.glowstone if entity @a[team=players,scores={drop.glowstone=1..}]
 }
-#	↑
-#	↑
-#	/scoreboard players operation @e[tag=rename,distance=..2] drop.sugar *= #10 tbg
-#	/scoreboard players operation @e[tag=rename,distance=..2] drop.redstone *= #10 tbg
-#	/scoreboard players operation @e[tag=rename,distance=..2] drop.glowstone *= #10 tbg
-#	/scoreboard players operation @e[tag=rename,distance=..2] drop.sugar /= #var tbg
-#	/scoreboard players operation @e[tag=rename,distance=..2] drop.redstone /= #var tbg
-#	/scoreboard players operation @e[tag=rename,distance=..2] drop.glowstone /= #var tbg
 
 /kill @e[tag=chunk_load]
 /kill @s

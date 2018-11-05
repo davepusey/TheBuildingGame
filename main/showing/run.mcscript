@@ -23,17 +23,17 @@ if('score #odd tbg matches 0'){
 	if('score #s-id-w tbg = @s id' && 'score #z tbg = @s stage'){
 		if('score @p[tag=showing.player] team matches 1..'){
 			if('score #z tbg matches 0'){
-				/tellraw @a ["\n",{"translate":"The team {"},{"selector":"@a[tag=showing.player]"},{"translate":"} wrote down \u00ab"},{"selector":"@s","color":"gold"},{"translate":"\u00bb."}]
+				/tellraw @a ["\n",{"translate":"The team {%s} wrote down \u00ab%s\u00bb.","with":[{"selector":"@a[tag=showing.player]"},{"selector":"@s","color":"gold"}]}]
 			}
 			if('score #z tbg matches 1..'){
-				/tellraw @a ["",{"translate":"The team {"},{"selector":"@a[tag=showing.player]"},{"translate":"} guessed \u00ab"},{"selector":"@s","color":"gold"},{"translate":"\u00bb."}]
+				/tellraw @a {"translate":"The team {%s} guessed \u00ab%s\u00bb.","with":[{"selector":"@a[tag=showing.player]"},{"selector":"@s","color":"gold"}]}
 			}
 		} else {
 			if('score #z tbg matches 0'){
-				/tellraw @a ["\n",{"selector":"@a[tag=showing.player]"},{"translate":" wrote down \u00ab"},{"selector":"@s","color":"gold"},{"translate":"\u00bb."}]
+				/tellraw @a ["\n",{"translate":"%s wrote down \u00ab%s\u00bb.","with":[{"selector":"@a[tag=showing.player]"},{"selector":"@s","color":"gold"}]}]
 			}
 			if('score #z tbg matches 1..'){
-				/tellraw @a ["",{"selector":"@a[tag=showing.player]"},{"translate":" guessed \u00ab"},{"selector":"@s","color":"gold"},{"translate":"\u00bb."}]
+				/tellraw @a {"translate":"%s guessed \u00ab%s\u00bb.","with":[{"selector":"@a[tag=showing.player]"},{"selector":"@s","color":"gold"}]}
 			}
 		}
 	}
@@ -54,9 +54,9 @@ if('score #odd tbg matches 1'){
 	as(@e[type=bat,tag=rename]),
 	if('score #s-id-b tbg = @s id' && 'score #s-stage-b tbg = @s stage'){
 		if('score @p[tag=showing.player] team matches 1..'){
-			/tellraw @a ["",{"translate":"The team {"},{"selector":"@a[tag=showing.player]"},{"translate":"} built \u00ab"},{"selector":"@s","color":"gold"},{"translate":"\u00bb."}]
+			/tellraw @a {"translate":"The team {%s} built \u00ab%s\u00bb.","with":[{"selector":"@a[tag=showing.player]"},{"selector":"@s","color":"gold"}]}
 		} else {
-			/tellraw @a ["",{"selector":"@a[tag=showing.player]"},{"translate":" built \u00ab"},{"selector":"@s","color":"gold"},{"translate":"\u00bb."}]
+			/tellraw @a {"translate":"%s built \u00ab%s\u00bb.","with":[{"selector":"@a[tag=showing.player]"},{"selector":"@s","color":"gold"}]}
 		}
 	}
 	/tag @a remove showing.player
@@ -68,15 +68,16 @@ if('score #odd tbg matches 1'){
 /scoreboard players operation #z tbg /= #2 tbg
 
 #VOTE SAVING
-if('score #zpre tbg matches 2..'){
-	if('score #odd tbg matches 0'){
-		/summon area_effect_cloud 0 1 0 {Duration:2,Tags:["vote-saving"]}
-		/scoreboard players remove #save-z tbg 16
-		/summon arrow 0 1 0 {xTile:992,yTile:64,zTile:0,Tags:["chunk_load"]}
-		/execute as @e[tag=chunk_load,nbt={zTile:0}] store result entity @s zTile int 1 run scoreboard players get #save-z tbg
-	} else {
-		/function tbg:next
-	}
-} else {
-	/function tbg:next
-}
+# if('score #zpre tbg matches 2..')
+# 	if('score #odd tbg matches 0')
+# 		/summon area_effect_cloud 0 1 0 {Duration:2,Tags:["vote-saving"]}
+# 		/scoreboard players remove #save-z tbg 16
+# 		/summon arrow 0 1 0 {xTile:992,yTile:64,zTile:0,Tags:["chunk_load"]}
+# 		/execute as @e[tag=chunk_load,nbt={zTile:0}] store result entity @s zTile int 1 run scoreboard players get #save-z tbg
+# 	} else
+# 		/function tbg:next
+# 	}
+# } else
+# 	/function tbg:next
+# }
+/function tbg:next

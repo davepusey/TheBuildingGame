@@ -4,10 +4,10 @@ if('score as_customization options matches 2..'){
 	/scoreboard players set as_customization options 0
 }
 if('score as_customization options matches 1'){
-	/tellraw @a ["",{"selector":"@s","color":"yellow"},{"translate":" has enabled armor stands customization"}]
+	/tellraw @a {"translate":"%s has enabled armor stands customization","with":[{"selector":"@s","color":"yellow"}]}
 }
 if('score as_customization options matches 0'){
-	/tellraw @a ["",{"selector":"@s","color":"yellow"},{"translate":" has disabled armor stands customization"}]
+	/tellraw @a {"translate":"%s has disabled armor stands customization","with":[{"selector":"@s","color":"yellow"}]}
 
 	/replaceitem entity @a inventory.18 air
 	/replaceitem entity @a inventory.19 air

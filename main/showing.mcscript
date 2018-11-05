@@ -1,9 +1,9 @@
 #file: ./showing
 /execute as @a[nbt=!{Dimension:0}] in overworld run function tbg:next/teleport
 
-as(@e[tag=saving,nbt={Age:1}]){
-	/function tbg:next/showing/saved
-}
+# as(@e[tag=saving,nbt={Age:1}])
+# 	/function tbg:next/showing/saved
+# }
 
 /effect clear @a invisibility
 as(@a[gamemode=creative]),
@@ -17,14 +17,14 @@ if('entity @a[distance=0.001..0.5]'){
 	/effect give @s invisibility 1 0 true
 }
 
-as(@e[tag=vote-saving,nbt={Age:1}]){
-	/function tbg:main/showing/vote-saved
-}
+# as(@e[tag=vote-saving,nbt={Age:1}])
+# 	/function tbg:main/showing/vote-saved
+# }
 
 /replaceitem entity @a[team=players] hotbar.3 lingering_potion{CustomPotionColor:1363445,HideFlags:32,display:{Name:"{\"translate\":\"Next\\u00a77 (%s)\",\"italic\":false,\"with\":[{\"keybind\":\"key.use\"}]}"}}
-if('score #odd tbg matches 1'){
-	/function tbg:main/showing/vote
-}
+# if('score #odd tbg matches 1')
+# 	/function tbg:main/showing/vote
+# }
 
 if('entity @e[type=potion,nbt={Potion:{tag:{display:{Name:"{\\"translate\\":\\"Next\\\\u00a77 (%s)\\",\\"italic\\":false,\\"with\\":[{\\"keybind\\":\\"key.use\\"}]}"}}}}]'){
 	/function tbg:main/showing/run

@@ -4,11 +4,11 @@ if('score as_animation options matches 2..'){
 	/scoreboard players set as_animation options 0
 }
 if('score as_animation options matches 1'){
-	/tellraw @a ["",{"selector":"@s","color":"yellow"},{"translate":" has enabled armor stands animation"}]
+	/tellraw @a {"translate":"%s has enabled armor stands animation","with":[{"selector":"@s","color":"yellow"}]}
 }
 if('score as_animation options matches 0'){
 	/replaceitem entity @a inventory.21 air
 	/replaceitem entity @a inventory.22 air
 
-	/tellraw @a ["",{"selector":"@s","color":"yellow"},{"translate":" has disabled armor stands animation"}]
+	/tellraw @a {"translate":"%s has disabled armor stands animation","with":[{"selector":"@s","color":"yellow"}]}
 }

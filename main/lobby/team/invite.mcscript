@@ -38,8 +38,8 @@ if('score team_members options matches 0'){
 						if(!'score @s team matches 1..'){
 							/function tbg:main/lobby/team/invite.create_team
 						}
-						/tellraw @s [{"translate":"You invited "},{"selector":"@a[tag=tag]","color":"yellow"}]
-						/tellraw @a[tag=tag] ["",{"selector":"@s","color":"yellow"},{"translate":" is inviting you to the team"}," ",{"translate":"[Accept]","color":"gold","clickEvent":{"action":"run_command","value":"/trigger accept"},"hoverEvent":{"action":"show_text","value":{"translate":"Accept the last invitation","color":"gold"}}}]
+						/tellraw @s {"translate":"You invited %s","with":[{"selector":"@a[tag=tag]","color":"yellow"}]}
+						/tellraw @a[tag=tag] [{"translate":"%s is inviting you to the team","with":[{"selector":"@s","color":"yellow"}]}," ",{"translate":"[Accept]","color":"gold","clickEvent":{"action":"run_command","value":"/trigger accept"},"hoverEvent":{"action":"show_text","value":{"translate":"Accept the last invitation","color":"gold"}}}]
 						/scoreboard players operation @a[tag=tag] team.invite = @s team
 					}
 				} else {

@@ -15,7 +15,7 @@ if('score #count id matches ..2'){
 					if('score @s team = #var team'){
 						/tag @s add tag
 					}
-					/tellraw @a ["",{"translate":"The maximum number of members in the team {"},{"selector":"@a[tag=tag]"},{"translate":"} has been exceeded."}]
+					/tellraw @a {"translate":"The maximum number of members in the team {%s} has been exceeded.","with":[{"selector":"@a[tag=tag]"}]}
 					/tag @a remove tag
 				}
 			}
@@ -24,10 +24,13 @@ if('score #count id matches ..2'){
 	if('score #success tbg matches 1'){
 		/function tbg:check_id
 
-		/tellraw @a [{"text":"","bold":true},{"selector":"@s","color":"yellow"},{"translate":" started the game!"}]
+		/tellraw @a {"translate":"%s started the game!","bold":true,"with":[{"selector":"@s"}]}
 		/scoreboard players set #stage tbg 0
 		as(@a[team=players]){
 			/function tbg:next/teleport
+			at(@s){
+				/playsound block.beacon.power_select master @s ~ ~ ~ 2 1.6
+			}
 		}
 		/scoreboard players set #waiting tbg 0
 		/scoreboard players set #stage tbg -1

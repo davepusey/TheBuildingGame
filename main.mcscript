@@ -1,4 +1,7 @@
 #file: ./main
+#count online players
+/execute store result score #online-count tbg if entity @a
+
 #rejoined player init
 as(@a[scores={joined=1..}]){
 	/function tbg:joined
@@ -16,7 +19,7 @@ if('score #stage tbg matches -2'){
 }
 
 #stages
-if('score #stage tbg matches 0..' && 'score #stage tbg < #count id'){
+if('score #stage tbg matches 0..' && 'score #stage tbg < #count id' && 'score #online-count tbg matches 1..'){
 	run function "main/stages"{
 		/scoreboard players operation #odd tbg = #stage tbg
 		/scoreboard players operation #odd tbg %= #2 tbg
@@ -32,8 +35,11 @@ if('score #stage tbg matches 0..' && 'score #stage tbg < #count id'){
 #waiting for chunk loading
 if('score #stage tbg matches -1'){
 	run function "main/waiting"{
+		/title @a times 0 10 10
+		/title @a title ""
+		/title @a subtitle {"translate":"Chunk loading...","color":"gray"}
 		/scoreboard players add #waiting tbg 1
-		if('score #waiting tbg matches 30'){
+		if('score #waiting tbg matches 100'){
 			/function tbg:check_id
 			if('score #count id matches 3..'){
 				/function tbg:next
@@ -57,6 +63,17 @@ if('score #stage tbg >= #count id'){
 /replaceitem entity @a inventory.26 barrier
 /replaceitem entity @a inventory.25 structure_void
 /replaceitem entity @a inventory.24 debug_stick
+/replaceitem entity @a inventory.23 writable_book{Tags:["get_head"],display:{Name:"{\"translate\":\"Get the Player Head %s\",\"italic\":false,\"with\":[{\"translate\":\"(write a nickname)\",\"color\":\"gray\"}]}"}}
+
+#get the player head
+as(@a){
+	if('data entity @s SelectedItem{id:"minecraft:writable_book",tag:{Tags:["get_head"]}}.tag.pages'){
+		/function tbg:main/get_head_mainhand
+	}
+	if('data entity @s Inventory[{Slot:-106b,id:"minecraft:writable_book",tag:{Tags:["get_head"]}}].tag.pages'){
+		/function tbg:main/get_head_offhand
+	}
+}
 
 #armor stand datapacks
 if('score as_customization options matches 1'){
@@ -64,10 +81,7 @@ if('score as_customization options matches 1'){
 }
 
 #entity
-as(@e[type=item,nbt={Age:1200s}]){
-	/data merge entity @s {Age:-32768s}
-}
-as(@e[type=item,nbt={Age:40s}]){
+as(@e[type=item,nbt={Age:-32728s}]){
 	/data merge entity @s {Motion:[]}
 }
 as('@e[type=!arrow,type=!dragon_fireball,type=!egg,type=!ender_pearl,type=!experience_bottle,type=!falling_block,type=!item_frame,type=!painting,type=!potion,type=!snowball,type=!trident,type=!tnt]'){
@@ -75,7 +89,7 @@ as('@e[type=!arrow,type=!dragon_fireball,type=!egg,type=!ender_pearl,type=!exper
 		/data merge entity @s {Fire:-20}
 		if('entity @s[tag=!entity_init]'){
 			run function "main/entity/init"{
-				/data merge entity @s {EggLayTime:2147483647,Fuse:32767s,NoAI:1,NoGravity:1,PersistenceRequired:1b,Silent:1b,ShowArms:1b,Invulnerable:1b,Health:0.001f,Attributes:[{Name:"generic.maxHealth",Base:0.001}]}
+				/data merge entity @s {Age:-32768s, EggLayTime:2147483647, Fuse:32767s, NoAI:1b, NoGravity:1b, PersistenceRequired:1b, Silent:1b, ShowArms:1b, Invulnerable:1b, Health:0.001f, Attributes:[{Name:"generic.maxHealth",Base:0.001f}]}
 				at(@s){
 					/teleport @s ~ ~ ~ facing entity @p[team=players] eyes
 				}

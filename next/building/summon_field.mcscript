@@ -1,11 +1,12 @@
 #file: ./summon_field
 at(@s),
 positioned('~2.5 ~ ~') {
-	/summon area_effect_cloud ~ ~ ~ {Duration:2147483647,Tags:["field"]}
+	/summon area_effect_cloud ~ ~ ~ {Duration:-1,Age:-2147483648,WaitTime:-2147483648,Tags:["field"]}
 	/scoreboard players operation @e[tag=field,distance=..0.1] id = @s id
+	/clone -10 32 -14 -10 32 -14 ~ ~ ~-1
 }
 at(@s),
 positioned('~-2.5 ~-0.35 ~') {
-	/summon area_effect_cloud ~ ~ ~ {Duration:2147483647,CustomName:"{\"translate\":\"Floor Changer\"}",CustomNameVisible:1b,Tags:["floor"]}
+	/summon area_effect_cloud ~ ~ ~ {Duration:-1,Age:-2147483648,WaitTime:-2147483648,CustomName:"{\"translate\":\"Floor Changer\"}",CustomNameVisible:1b,Tags:["floor"]}
 	/clone ~ ~-0.65 ~ ~ ~-0.65 ~ ~ 1 ~
 }

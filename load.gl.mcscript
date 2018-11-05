@@ -1,6 +1,7 @@
 #file: ./mcscript/load
 /kill @e[tag=field]
 /kill @e[tag=floor]
+/kill @e[type=bat,tag=rename,tag=!renamed]
 ################################################################################
 /scoreboard objectives remove accept
 /scoreboard objectives remove help
@@ -85,5 +86,5 @@ if('score team_members options matches 1..'){
 /scoreboard players set #stage tbg -2
 
 /kill @e[type=area_effect_cloud]
-/summon area_effect_cloud 3 64 5 {Duration:2147483647,CustomName:"{\"translate\":\"Spectate\",\"bold\":true}",CustomNameVisible:1b}
-/summon area_effect_cloud -4 64 5 {Duration:2147483647,CustomName:"{\"translate\":\"Play\",\"color\":\"yellow\",\"bold\":true}",CustomNameVisible:1b}
+/summon area_effect_cloud 3 64 5 {Duration:-1,Age:-2147483648,WaitTime:-2147483648,CustomName:"{\"translate\":\"Spectate\",\"bold\":true}",CustomNameVisible:1b}
+/summon area_effect_cloud -4 64 5 {Duration:-1,Age:-2147483648,WaitTime:-2147483648,CustomName:"{\"translate\":\"Play\",\"color\":\"yellow\",\"bold\":true}",CustomNameVisible:1b}

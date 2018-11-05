@@ -1,0 +1,4 @@
+#file: ./get_head_offhand
+/replaceitem block -15 32 -10 container.0 player_head
+/data modify block -15 32 -10 Items[0].tag.SkullOwner set from entity @s Inventory[{Slot:-106b}].tag.pages[0]
+/drop entity @s weapon.offhand mine -10 33 -14

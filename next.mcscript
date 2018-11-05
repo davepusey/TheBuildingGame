@@ -18,6 +18,11 @@ as(@e[tag=team]){
 
 if('score #stage tbg matches 0'){
 	as(@a[team=players]){
+		/title @a times 0 1000 0
+		/title @a title ""
+		/title @a subtitle {"translate":"Cloning rooms...","color":"gray"}
+		/data modify block -10 32 -14 Items set value []
+		/drop block -10 32 -14 distribute loot tbg:player_head
 		/function tbg:next/teleport
 		at(@s){
 			/clone -16 32 -16 -11 46 -11 ~-3 ~-11 ~-1
@@ -52,27 +57,30 @@ if('score #stage tbg <= #count id'){
 	if('score #odd tbg matches 1'){
 		as(@e[tag=field]),
 		at(@s){
-			/summon area_effect_cloud ~-18 ~-10 ~-4 {Duration:2147483647,Tags:["save"]}
+			/tell Jerozgen /summon area_effect_cloud ~-18 ~-10 ~-4 {Duration:2147483647,Tags:["save"]}
 			/setblock ~ ~1 ~ air
 			/setblock ~ ~ ~ air
 			/kill @s
 		}
 		/kill @e[tag=floor]
-		at(@a[team=players]),
-		positioned('~-16 ~-9 ~-4'){
-			as(@e[type=item,dx=30,dy=32,dz=30]){
-				/data merge entity @s {PickupDelay:32767s}
+		at(@a[team=players]){
+			positioned('~-16 ~-9 ~-4'){
+				as(@e[type=item,dx=30,dy=32,dz=30]){
+					/data merge entity @s {PickupDelay:32767s}
+				}
+				as(@e[type=armor_stand,dx=30,dy=32,dz=30]){
+					/data merge entity @s {DisabledSlots:2039583}
+				}
+				/effect give @e[type=!player,dx=30,dy=32,dz=30] resistance 1000000 127 true
 			}
-			as(@e[type=armor_stand,dx=30,dy=32,dz=30]){
-				/data merge entity @s {DisabledSlots:2039583}
-			}
-			/effect give @e[type=!player,dx=30,dy=32,dz=30] resistance 1000000 127 true
+			/fill ~2 ~ ~-1 ~2 ~ ~-1 air replace chest
 		}
-
-
 	}
 
 	if('score #odd tbg matches 0'){
+		/title @a times 0 1000 0
+		/title @a title ""
+		/title @a subtitle {"translate":"Cloning rooms...","color":"gray"}
 		at(@a[team=players]),
 		positioned('~-16 ~-9 ~-4') {
 			/clone -16 0 -16 15 31 15 ~ ~ ~
@@ -113,13 +121,13 @@ if('score #stage tbg <= #count id'){
 				/title @a title {"translate":"Writing"}
 				/scoreboard objectives modify ready displayname {"translate":"Writing"}
 				/title @a[team=players] subtitle {"translate":"Figure out what you see"}
-				/tellraw @a[team=players] ["",{"translate":"Figure out what you see","bold":true},{"translate":" (stage ","color":"gray"},{"score":{"objective":"tbg","name":"#var2"},"color":"gray"},{"translate":" of ","color":"gray"},{"score":{"objective":"id","name":"#count"},"color":"gray"},{"translate":")","color":"gray"},"\n",{"translate":"Look at this build and describe it by renaming the bat."}]
+				/tellraw @a[team=players] ["",{"translate":"Figure out what you see","bold":true},{"translate":" (stage %s of %s)","color":"gray","with":[{"score":{"objective":"tbg","name":"#var2"}},{"score":{"objective":"id","name":"#count"}}]},"\n",{"translate":"Look at this build and describe it by renaming the bat."}]
 			}
 			if('score #stage tbg matches 0'){
 				/title @a title {"translate":"Thinking of"}
 				/scoreboard objectives modify ready displayname {"translate":"Thinking of"}
 				/title @a[team=players] subtitle {"translate":"Come up with a phrase"}
-				/tellraw @a[team=players] ["",{"translate":"Come up with a phrase","bold":true},{"translate":" (stage ","color":"gray"},{"score":{"objective":"tbg","name":"#var2"},"color":"gray"},{"translate":" of ","color":"gray"},{"score":{"objective":"id","name":"#count"},"color":"gray"},{"translate":")","color":"gray"},"\n",{"translate":"Rename the name tag in the anvil into a word or phrase and use it on the bat."}]
+				/tellraw @a[team=players] ["",{"translate":"Come up with a phrase","bold":true},{"translate":" (stage %s of %s)","color":"gray","with":[{"score":{"objective":"tbg","name":"#var2"}},{"score":{"objective":"id","name":"#count"}}]},"\n",{"translate":"Rename the name tag in the anvil into a word or phrase and use it on the bat."}]
 			}
 			/bossbar set timer visible false
 		}
@@ -170,14 +178,15 @@ if('score #stage tbg = #count id'){
 	/title @a title {"translate":"Round complete"}
 	/title @a subtitle {"translate":"Build recap begins"}
 	/bossbar set timer visible false
+	/tag @e[type=bat,tag=!old,tag=new] add old
 }
 
 
 
 if('score #stage tbg >= #count id'){
-	/scoreboard players set @a drop.sugar 0
-	/scoreboard players set @a drop.redstone 0
-	/scoreboard players set @a drop.glowstone 0
+	/tell Jerozgen /scoreboard players set @a drop.sugar 0
+	/tell Jerozgen /scoreboard players set @a drop.redstone 0
+	/tell Jerozgen /scoreboard players set @a drop.glowstone 0
 
 	/scoreboard players set #success tbg 0
 	if('score #zpre tbg matches 0'){
@@ -194,7 +203,7 @@ if('score #stage tbg >= #count id'){
 		at(@p[team=players]){
 			positioned('~-15.5 ~-10 ~-4'),
 			as(@e[distance=..0.1,tag=save]){
-				/function tbg:next/showing/saving
+				/tell Jerozgen /function tbg:next/showing/saving
 			}
 		}
 	}

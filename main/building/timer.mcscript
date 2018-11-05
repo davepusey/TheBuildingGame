@@ -6,19 +6,19 @@
 if('score #time tbg matches 3600..'){
 	/scoreboard players operation #display_time tbg = #time tbg
 	/scoreboard players operation #display_time tbg /= #3600 tbg
-	/bossbar set timer name ["",{"translate":"Time Remaining: "},{"score":{"objective":"tbg","name":"#display_time"},"color":"gold"},{"translate":"h"}]
+	/bossbar set timer name {"translate":"Time Remaining: %s","with":[[{"score":{"objective":"tbg","name":"#display_time"},"color":"gold"},{"translate":"h"}]]}
 }
 
 if('score #time tbg matches 60..3599'){
 	/scoreboard players operation #display_time tbg = #time tbg
 	/scoreboard players operation #display_time tbg /= #60 tbg
-	/bossbar set timer name ["",{"translate":"Time Remaining: "},{"score":{"objective":"tbg","name":"#display_time"},"color":"gold"},{"translate":"min"}]
+	/bossbar set timer name {"translate":"Time Remaining: %s","with":[[{"score":{"objective":"tbg","name":"#display_time"},"color":"gold"},{"translate":"min"}]]}
 }
 
 if('score #time tbg matches ..59'){
 	/scoreboard players operation #display_time tbg = #time tbg
 	/scoreboard players operation #display_time tbg %= #60 tbg
-	/bossbar set timer name ["",{"translate":"Time Remaining: "},{"score":{"objective":"tbg","name":"#display_time"},"color":"gold","bold":true},{"translate":"s"}]
+	/bossbar set timer name {"translate":"Time Remaining: %s","with":[[{"score":{"objective":"tbg","name":"#display_time"},"color":"gold","bold":true},{"translate":"s"}]]}
 }
 
 

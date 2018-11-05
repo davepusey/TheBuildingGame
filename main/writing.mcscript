@@ -4,7 +4,7 @@
 as(@a[team=spectators]),
 at(@s),
 if(@e[tag=renamed,tag=old,dx=-32,dy=-32,dz=-32]){
-	/title @s actionbar [{"translate":"You\u2019re looking at: "},{"selector":"@e[tag=renamed,tag=old,dx=-32,dy=-32,dz=-32]","color":"gold"}]
+	/title @s actionbar {"translate":"You\u2019re looking at: %s","with":[{"selector":"@e[tag=renamed,tag=old,dx=-32,dy=-32,dz=-32]","color":"gold"}]}
 }
 
 as(@e[type=item,nbt={PickupDelay:40s,Item:{id:"minecraft:name_tag"}}]){
@@ -24,7 +24,7 @@ if(!'entity @s[nbt={CustomName:"{\\"translate\\":\\"Rename me!\\"}"}]') {
 	as(@a[team=players]),
 	if('score @s id = @e[tag=rename,distance=0,limit=1] id') {
 		/scoreboard players reset @s ready
-		/tellraw @a ["",{"selector":"@s"},{"translate":" is ready."}]
+		/tellraw @a {"translate":"%s is ready.","with":[{"selector":"@s"}]}
 	}
 	as(@a),
 	at(@s){

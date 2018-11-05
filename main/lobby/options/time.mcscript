@@ -3,18 +3,18 @@
 
 if('score @s time matches ..0'){
 	if('score time options matches 1..'){
-		/tellraw @a ["",{"selector":"@s","color":"yellow"},{"translate":" has set max building time to§a Unlimited"}]
+		/tellraw @a {"translate":"%s has set max building time to§a Unlimited","with":[{"selector":"@s","color":"yellow"}]}
 	}
 	/scoreboard players set @s time 0
 }
 if('score @s time matches 3600..'){
-	/tellraw @a ["",{"selector":"@s","color":"yellow"},{"translate":" has set max building time to "},{"score":{"name":"#h","objective":"time"},"color":"aqua"},{"translate":"h","color":"aqua"}," ",{"score":{"name":"#min","objective":"time"},"color":"aqua"},{"translate":"min","color":"aqua"}," ",{"score":{"name":"#s","objective":"time"},"color":"aqua"},{"translate":"s","color":"aqua"}]
+	/tellraw @a {"translate":"%s has set max building time to %s","with":[{"selector":"@s","color":"yellow"},[{"score":{"name":"#h","objective":"time"},"color":"aqua"},{"translate":"h","color":"aqua"}," ",{"score":{"name":"#min","objective":"time"},"color":"aqua"},{"translate":"min","color":"aqua"}," ",{"score":{"name":"#s","objective":"time"},"color":"aqua"},{"translate":"s","color":"aqua"}]]}
 }
 if('score @s time matches 60..3599'){
-	/tellraw @a ["",{"selector":"@s","color":"yellow"},{"translate":" has set max building time to "},{"score":{"name":"#min","objective":"time"},"color":"aqua"},{"translate":"min","color":"aqua"}," ",{"score":{"name":"#s","objective":"time"},"color":"aqua"},{"translate":"s","color":"aqua"}]
+	/tellraw @a {"translate":"%s has set max building time to %s","with":[{"selector":"@s","color":"yellow"},[{"score":{"name":"#min","objective":"time"},"color":"aqua"},{"translate":"min","color":"aqua"}," ",{"score":{"name":"#s","objective":"time"},"color":"aqua"},{"translate":"s","color":"aqua"}]]}
 }
 if('score @s time matches 1..59'){
-	/tellraw @a ["",{"selector":"@s","color":"yellow"},{"translate":" has set max building time to "},{"score":{"name":"#s","objective":"time"},"color":"aqua"},{"translate":"s","color":"aqua"}]
+	/tellraw @a {"translate":"%s has set max building time to %s","with":[{"selector":"@s","color":"yellow"},[{"score":{"name":"#s","objective":"time"},"color":"aqua"},{"translate":"s","color":"aqua"}]]}
 }
 /scoreboard players operation time options = @s time
 /scoreboard players operation @a time = time options

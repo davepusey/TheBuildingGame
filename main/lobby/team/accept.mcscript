@@ -28,8 +28,8 @@ if('score team_members options matches 0'){
 				/scoreboard players operation @s pre-id = @a[tag=tag,limit=1] pre-id
 				/function tbg:check_id
 				/scoreboard players operation @s team = @s team.invite
-				/tellraw @a[tag=tag] ["",{"selector":"@s"},{"translate":" joined your team"}]
-				/tellraw @s ["",{"translate":"You joined the team {"},{"selector":"@a[tag=tag]"},{"translate":"}"}]
+				/tellraw @a[tag=tag] {"translate":"%s joined your team","with":[{"selector":"@s"}]}
+				/tellraw @s {"translate":"You joined the team {%s}","with":[{"selector":"@a[tag=tag]"}]}
 				/scoreboard players reset @s team.invite
 			}
 		} else {

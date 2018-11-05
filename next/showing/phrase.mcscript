@@ -16,7 +16,7 @@ if('score #var tbg = @s id'){
 	/tag @s add output.last
 }
 
-/tellraw @s ["",{"translate":"Round complete","bold":true},"\n",{"translate":"Your phrase \u00ab"},{"selector":"@e[tag=output.first]","color":"gray"},{"translate":"\u00bb evolved into \u00ab"},{"selector":"@e[tag=output.last]","color":"gold"},{"translate":"\u00bb."}]
+/tellraw @s ["",{"translate":"Round complete","bold":true},"\n",{"translate":"Your phrase \u00ab%s\u00bb evolved into \u00ab%s\u00bb.","with":[{"selector":"@e[tag=output.first]","color":"gray"},{"selector":"@e[tag=output.last]","color":"gold"}]}]
 
 /tag @e remove output.first
 /tag @e remove output.last

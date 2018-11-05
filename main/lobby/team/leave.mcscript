@@ -9,7 +9,7 @@ if('score @s team matches 1..'){
 	/tag @s add tag
 	as(@a[tag=!tag]),
 	if('score @s team = @a[tag=tag,limit=1] team'){
-		/tellraw @s ["",{"selector":"@a[tag=tag]","color":"yellow"},{"translate":" left your team"}]
+		/tellraw @s {"translate":"%s left your team","with":[{"selector":"@a[tag=tag]","color":"yellow"}]}
 		/tag @a remove tag
 	}
 	if(!'entity @s[tag=tag]'){

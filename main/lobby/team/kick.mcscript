@@ -14,13 +14,13 @@ if('score @s kick matches -2147483647'){
 			if(!'score @a[tag=tag,limit=1] team = @s team'){
 				/tellraw @s {"translate":"This player isn\u2019t in your team","color":"red"}
 			} else {
-				/tellraw @s ["",{"selector":"@a[tag=tag]"},{"translate":" was kicked from your team"}]
-				/tellraw @a[tag=tag] ["",{"selector":"@s"},{"translate":" kicked you from the team"}]
+				/tellraw @s {"translate":"%s was kicked from your team","with":[{"selector":"@a[tag=tag]","color":"yellow"}]}
+				/tellraw @a[tag=tag] {"translate":"%s kicked you from the team","with":[{"selector":"@s"}]}
 
 				/tag @s add tag2
 				as(@a[tag=!tag2,tag=!tag]),
 				if('score @s team = @a[tag=tag2,limit=1] team'){
-					/tellraw @s ["",{"selector":"@a[tag=tag2]"},{"translate":" kicked "},{"selector":"@a[tag=tag]"},{"translate":" from the team"}]
+					/tellraw @s {"translate":"%s kicked %s from the team","with":[{"selector":"@a[tag=tag2]"},{"selector":"@a[tag=tag]"}]}
 				}
 				/tag @s remove tag2
 
