@@ -1,0 +1,10 @@
+execute if score @s zcas_click matches 60 run scoreboard players set @s cas_anipose 1
+execute if score @s zcas_click matches 61 run scoreboard players set @s cas_anipose 2
+execute if score @s zcas_click matches 62 run scoreboard players set @s cas_anipose 3
+execute if score @s zcas_click matches 63 run scoreboard players set @s cas_anipose 4
+execute if score @s zcas_click matches 64 run scoreboard players set @s cas_anipose 5
+execute if score @s zcas_click matches 60 run tellraw @s {"translate":"Now modifying frame %s.","color":"green","with":[{"text":"1"}]}
+execute if score @s zcas_click matches 61 run tellraw @s {"translate":"Now modifying frame %s.","color":"green","with":[{"text":"2"}]}
+execute if score @s zcas_click matches 62 run tellraw @s {"translate":"Now modifying frame %s.","color":"green","with":[{"text":"3"}]}
+execute if score @s zcas_click matches 63 run tellraw @s {"translate":"Now modifying frame %s.","color":"green","with":[{"text":"4"}]}
+execute if score @s zcas_click matches 64 run tellraw @s {"translate":"Now modifying frame %s.","color":"green","with":[{"text":"5"}]}

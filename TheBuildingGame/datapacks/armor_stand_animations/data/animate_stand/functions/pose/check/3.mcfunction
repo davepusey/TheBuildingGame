@@ -1,0 +1,6 @@
+execute if entity @s[tag=!Animate3] run tellraw @p[tag=casTemp] {"translate":"Selected frame: %s\nState: Disabled","color":"green","with":[{"text":"3"}]}
+execute if entity @s[tag=Animate3,scores={cas_anitime3=10}] run tellraw @p[tag=casTemp] {"translate":"Selected frame: %s\nState: Enabled\nAnimation time: %s s","color":"green","with":[{"text":"3"},{"text":"0.5"}]}
+execute if entity @s[tag=Animate3,scores={cas_anitime3=20}] run tellraw @p[tag=casTemp] {"translate":"Selected frame: %s\nState: Enabled\nAnimation time: %s s","color":"green","with":[{"text":"3"},{"text":"1"}]}
+execute if entity @s[tag=Animate3,scores={cas_anitime3=50}] run tellraw @p[tag=casTemp] {"translate":"Selected frame: %s\nState: Enabled\nAnimation time: %s s","color":"green","with":[{"text":"3"},{"text":"2.5"}]}
+execute if entity @s[tag=Animate3,scores={cas_anitime3=100}] run tellraw @p[tag=casTemp] {"translate":"Selected frame: %s\nState: Enabled\nAnimation time: %s s","color":"green","with":[{"text":"3"},{"text":"5"}]}
+execute if entity @s[tag=Animate3,scores={cas_anitime3=200}] run tellraw @p[tag=casTemp] {"translate":"Selected frame: %s\nState: Enabled\nAnimation time: %s s","color":"green","with":[{"text":"3"},{"text":"10"}]}

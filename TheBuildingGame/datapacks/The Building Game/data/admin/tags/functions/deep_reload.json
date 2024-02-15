@@ -1,0 +1,8 @@
+
+{
+  "values":[
+  	"tbg:load",
+    "custom_stand:setup",
+    "animate_stand:setup"
+  ]
+}

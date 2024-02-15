@@ -1,0 +1,7 @@
+execute if entity @s[tag=!Move4] run tellraw @p[tag=casTemp] {"translate":"Selected frame: %s\nState: Disabled","color":"green","with":[{"text":"4"}]}
+execute if entity @s[tag=Move4,scores={cas_postime4=20}] run tellraw @p[tag=casTemp] {"translate":"Selected frame: %s\nState: Enabled\nMovement time: %s s","color":"green","with":[{"text":"4"},{"text":"1"}]}
+execute if entity @s[tag=Move4,scores={cas_postime4=60}] run tellraw @p[tag=casTemp] {"translate":"Selected frame: %s\nState: Enabled\nMovement time: %s s","color":"green","with":[{"text":"4"},{"text":"3"}]}
+execute if entity @s[tag=Move4,scores={cas_postime4=100}] run tellraw @p[tag=casTemp] {"translate":"Selected frame: %s\nState: Enabled\nMovement time: %s s","color":"green","with":[{"text":"4"},{"text":"5"}]}
+execute if entity @s[tag=Move4,scores={cas_postime4=200}] run tellraw @p[tag=casTemp] {"translate":"Selected frame: %s\nState: Enabled\nMovement time: %s s","color":"green","with":[{"text":"4"},{"text":"10"}]}
+execute if entity @s[tag=Move4,scores={cas_postime4=400}] run tellraw @p[tag=casTemp] {"translate":"Selected frame: %s\nState: Enabled\nMovement time: %s s","color":"green","with":[{"text":"4"},{"text":"20"}]}
+execute if entity @s[tag=Move4,scores={cas_postime4=600}] run tellraw @p[tag=casTemp] {"translate":"Selected frame: %s\nState: Enabled\nMovement time: %s s","color":"green","with":[{"text":"4"},{"text":"30"}]}
