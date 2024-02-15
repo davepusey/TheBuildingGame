@@ -12,7 +12,7 @@ execute if score #stage tbg matches 0 as @a[team=players] run function tbg:next/
 execute if score #stage tbg matches 0 as @a[team=players] at @s run clone -16 32 -16 -11 46 -11 ~-3 ~-11 ~-1
 execute if score #stage tbg matches 0 run gamemode spectator @a[team=!players]
 execute if score #stage tbg matches 0 as @a[team=!players] run teleport @r[team=players]
-execute if score #stage tbg matches 0 run scoreboard objectives setdisplay belowName
+execute if score #stage tbg matches 0 run scoreboard objectives setdisplay below_name
 execute if score #stage tbg matches 0 run scoreboard players set @a[team=players] in_game 1
 execute if score #stage tbg matches 0 run scoreboard players reset @a accept
 execute if score #stage tbg matches 0 run scoreboard players reset @a help
@@ -39,7 +39,7 @@ execute if score #stage tbg <= #count id if score #odd tbg matches 0 as @e[type=
 execute if score #stage tbg <= #count id if score #odd tbg matches 0 as @e[type=bat,tag=!old,tag=new] at @s if score #stage tbg matches 1 run teleport ~-15.5 ~-12 ~15
 execute if score #stage tbg <= #count id if score #odd tbg matches 0 as @e[type=bat,tag=!old,tag=new] at @s unless score #stage tbg matches 1 run teleport ~-15.5 ~-10 ~30
 execute if score #stage tbg <= #count id unless score #stage tbg = #count id run scoreboard players set @a[team=players] ready 0
-execute if score #stage tbg <= #count id unless score #stage tbg = #count id if score #odd tbg matches 1 run replaceitem entity @a[team=players] hotbar.0 name_tag
+execute if score #stage tbg <= #count id unless score #stage tbg = #count id if score #odd tbg matches 1 run item replace entity @a[team=players] hotbar.0 with name_tag
 execute if score #stage tbg <= #count id unless score #stage tbg = #count id if score #odd tbg matches 1 as @a[team=players] unless score @s team matches 1.. run function tbg:next/writing/summon_bat
 execute if score #stage tbg <= #count id unless score #stage tbg = #count id if score #odd tbg matches 1 as @e[tag=team] run function tbg:next/writing/summon_team_bat
 execute if score #stage tbg <= #count id unless score #stage tbg = #count id if score #odd tbg matches 1 run tag @e[type=bat,tag=!old,tag=new] add old

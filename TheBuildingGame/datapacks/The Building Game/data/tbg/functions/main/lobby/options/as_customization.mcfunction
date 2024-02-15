@@ -10,8 +10,8 @@ execute if score as_customization options matches 2.. run scoreboard players set
 execute if score as_customization options matches 1 run tellraw @a ["",{"selector":"@s","color":"yellow"},{"translate":" has enabled armor stands customization"}]
 
 execute if score as_customization options matches 0 run tellraw @a ["",{"selector":"@s","color":"yellow"},{"translate":" has disabled armor stands customization"}]
-execute if score as_customization options matches 0 run replaceitem entity @a inventory.18 air
-execute if score as_customization options matches 0 run replaceitem entity @a inventory.19 air
-execute if score as_customization options matches 0 run replaceitem entity @a inventory.20 air
-execute if score as_customization options matches 0 if score as_animation options matches 1 run replaceitem entity @a inventory.21 air
-execute if score as_customization options matches 0 if score as_animation options matches 1 run replaceitem entity @a inventory.22 air
+execute if score as_customization options matches 0 run item replace entity @a inventory.18 with air
+execute if score as_customization options matches 0 run item replace entity @a inventory.19 with air
+execute if score as_customization options matches 0 run item replace entity @a inventory.20 with air
+execute if score as_customization options matches 0 if score as_animation options matches 1 run item replace entity @a inventory.21 with air
+execute if score as_customization options matches 0 if score as_animation options matches 1 run item replace entity @a inventory.22 with air

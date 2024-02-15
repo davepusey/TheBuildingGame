@@ -58,7 +58,7 @@ scoreboard objectives add ready dummy
 scoreboard objectives add p_id dummy {"translate":"ID"}
 scoreboard objectives setdisplay sidebar ready
 scoreboard objectives setdisplay list id
-execute if score team_members options matches 1.. run scoreboard objectives setdisplay belowName p_id
+execute if score team_members options matches 1.. run scoreboard objectives setdisplay below_name p_id
 
 team remove spectators
 team add spectators {"text":"Spectators"}

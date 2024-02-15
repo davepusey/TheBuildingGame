@@ -22,9 +22,9 @@ execute if score #stage tbg >= #count id run function tbg:main/showing
 
 #other
 scoreboard players reset @a[scores={drop.lingering=1..}] drop.lingering
-replaceitem entity @a inventory.26 barrier
-replaceitem entity @a inventory.25 structure_void
-replaceitem entity @a inventory.24 debug_stick
+item replace entity @a inventory.26 with barrier
+item replace entity @a inventory.25 with structure_void
+item replace entity @a inventory.24 with debug_stick
 #armor stand datapacks
 execute if score as_customization options matches 1 run function tbg:main/armor_stand
 

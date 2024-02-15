@@ -9,6 +9,6 @@ execute if score as_animation options matches 2.. run scoreboard players set as_
 
 execute if score as_animation options matches 1 run tellraw @a ["",{"selector":"@s","color":"yellow"},{"translate":" has enabled armor stands animation"}]
 
-execute if score as_animation options matches 0 run replaceitem entity @a inventory.21 air
-execute if score as_animation options matches 0 run replaceitem entity @a inventory.22 air
+execute if score as_animation options matches 0 run item replace entity @a inventory.21 with air
+execute if score as_animation options matches 0 run item replace entity @a inventory.22 with air
 execute if score as_animation options matches 0 run tellraw @a ["",{"selector":"@s","color":"yellow"},{"translate":" has disabled armor stands animation"}]

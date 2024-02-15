@@ -14,7 +14,7 @@ scoreboard players reset * ready
 scoreboard players set @a invite -2147483648
 scoreboard players set @a kick -2147483648
 scoreboard players operation @a time = time options
-execute if score team_members options matches 1.. run scoreboard objectives setdisplay belowName p_id
+execute if score team_members options matches 1.. run scoreboard objectives setdisplay below_name p_id
 
 kill @e[tag=team]
 team join spectators @a
